@@ -1,0 +1,99 @@
+2023-12-12 17:32:56.815 INFO  (main) [] o.e.j.s.Server jetty-10.0.13; built: 2022-12-07T20:13:20.134Z; git: 1c2636ea05c0ca8de1ffd6ca7f3a98ac084c766d; jvm 19.0.1+10-21
+2023-12-12 17:32:57.496 WARN  (main) [] o.e.j.u.DeprecationWarning Using @Deprecated Class org.eclipse.jetty.servlet.listener.ELContextCleaner
+2023-12-12 17:32:57.524 INFO  (main) [] o.a.s.s.CoreContainerProvider Using logger factory org.apache.logging.slf4j.Log4jLoggerFactory
+2023-12-12 17:32:57.529 INFO  (main) [] o.a.s.s.CoreContainerProvider  ___      _       Welcome to Apache Solr™ version 9.2.0
+2023-12-12 17:32:57.529 INFO  (main) [] o.a.s.s.CoreContainerProvider / __| ___| |_ _   Starting in standalone mode on port 8983
+2023-12-12 17:32:57.529 INFO  (main) [] o.a.s.s.CoreContainerProvider \__ \/ _ \ | '_|  Install dir: C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr
+2023-12-12 17:32:57.529 INFO  (main) [] o.a.s.s.CoreContainerProvider |___/\___/_|_|    Start time: 2023-12-12T17:32:57.529565600Z
+2023-12-12 17:32:57.532 INFO  (main) [] o.a.s.s.CoreContainerProvider Solr started with "-XX:+CrashOnOutOfMemoryError" that will crash on any OutOfMemoryError exception. The cause of the OOME will be logged in the crash file at the following path: C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\logs\jvm_crash_21856.log
+2023-12-12 17:32:57.537 INFO  (main) [] o.a.s.s.CoreContainerProvider Solr Home: C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr (source: system property: solr.solr.home)
+2023-12-12 17:32:57.539 INFO  (main) [] o.a.s.c.SolrXmlConfig Loading solr.xml from C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\solr.xml
+2023-12-12 17:32:57.607 INFO  (main) [] o.a.s.c.SolrResourceLoader Added 1 libs to classloader, from paths: [/C:/Users/jhony/Desktop/UNI/23-24/MB/buscador/solr/lib]
+2023-12-12 17:32:58.514 WARN  (main) [] o.a.s.u.StartupLoggingUtils Jetty request logging enabled. Will retain logs for last 3 days. See chapter "Configuring Logging" in reference guide for how to configure.
+2023-12-12 17:32:58.515 WARN  (main) [] o.a.s.c.CoreContainer Not all security plugins configured!  authentication=disabled authorization=disabled.  Solr is only as secure as you make it. Consider configuring authentication/authorization before exposing Solr to users internal or external.  See https://s.apache.org/solrsecurity for more info
+2023-12-12 17:33:35.090 WARN  (main) [] o.a.s.h.a.SystemInfoHandler Resolving canonical hostname for local host took 36.510 seconds, possible DNS misconfiguration. Set the 'solr.dns.prevent.reverse.lookup'  sysprop to true on startup to prevent future lookups if DNS can not be fixed.
+2023-12-12 17:33:35.202 INFO  (main) [] o.a.s.c.CorePropertiesLocator Found 1 core definitions underneath C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr
+2023-12-12 17:33:35.203 INFO  (main) [] o.a.s.c.CorePropertiesLocator Cores are: [micoleccion]
+2023-12-12 17:33:35.224 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.c.SolrConfig Using Lucene MatchVersion: 9.4.0
+2023-12-12 17:33:35.284 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.s.IndexSchema Schema name=default-config
+2023-12-12 17:33:35.562 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.s.IndexSchema Loaded schema default-config/1.6 with uniqueid field id
+2023-12-12 17:33:35.562 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.c.CoreContainer Creating SolrCore 'micoleccion' using configuration from instancedir C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion, trusted=true
+2023-12-12 17:33:35.602 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.c.SolrCore Opening new SolrCore at [C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion], dataDir=[C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\data\]
+2023-12-12 17:33:35.611 INFO  (main) [] o.a.s.j.SolrRequestAuthorizer Creating a new SolrRequestAuthorizer
+2023-12-12 17:33:35.897 INFO  (main) [] o.e.j.s.h.ContextHandler Started o.e.j.w.WebAppContext@6ca320ab{solr-jetty-context.xml,/solr,file:///C:/Users/jhony/Desktop/UNI/23-24/MB/buscador/solr/server/solr-webapp/webapp/,AVAILABLE}{C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server/solr-webapp/webapp}
+2023-12-12 17:33:35.904 INFO  (main) [] o.e.j.s.RequestLogWriter Opened C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\logs\2023_12_12.request.log
+2023-12-12 17:33:35.913 INFO  (main) [] o.e.j.s.AbstractConnector Started ServerConnector@fd0e5b6{HTTP/1.1, (http/1.1, h2c)}{127.0.0.1:8983}
+2023-12-12 17:33:35.914 INFO  (main) [] o.e.j.s.Server Started Server@f9b7332{STARTING}[10.0.13,sto=0] @49336ms
+2023-12-12 17:33:36.001 INFO  (qtp1677207406-44) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json} status=0 QTime=36
+2023-12-12 17:34:12.251 WARN  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.h.a.SystemInfoHandler Resolving canonical hostname for local host took 36.300 seconds, possible DNS misconfiguration. Set the 'solr.dns.prevent.reverse.lookup'  sysprop to true on startup to prevent future lookups if DNS can not be fixed.
+2023-12-12 17:34:12.383 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.j.SolrRequestAuthorizer Creating a new SolrRequestAuthorizer
+2023-12-12 17:34:12.393 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+2023-12-12 17:34:12.393 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+2023-12-12 17:34:12.407 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.u.CommitTracker Hard AutoCommit: if uncommitted for 15000ms; 
+2023-12-12 17:34:12.407 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.u.CommitTracker Soft AutoCommit: disabled
+2023-12-12 17:34:12.524 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.r.ManagedResourceStorage File-based storage initialized to use dir: C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\conf
+2023-12-12 17:34:12.537 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.s.DirectSolrSpellChecker init: {accuracy=0.5, maxQueryFrequency=0.01, maxEdits=2, minPrefix=1, maxInspections=5, minQueryLength=4, name=default, field=_text_, classname=solr.DirectSolrSpellChecker, distanceMeasure=internal}
+2023-12-12 17:34:12.544 INFO  (coreLoadExecutor-10-thread-1) [ x:micoleccion] o.a.s.h.ReplicationHandler Commits will be reserved for 10000 ms
+2023-12-12 17:34:12.557 INFO  (searcherExecutor-12-thread-1-processing-micoleccion) [ x:micoleccion] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2023-12-12 17:34:12.557 INFO  (searcherExecutor-12-thread-1-processing-micoleccion) [ x:micoleccion] o.a.s.h.c.SpellCheckComponent Loading spell index for spellchecker: default
+2023-12-12 17:34:12.564 INFO  (searcherExecutor-12-thread-1-processing-micoleccion) [ x:micoleccion] o.a.s.c.SolrCore Registered new searcher autowarm time: 0 ms
+2023-12-12 17:34:17.688 INFO  (qtp1677207406-38) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702402457621} status=0 QTime=1
+2023-12-12 17:34:17.692 INFO  (qtp1677207406-66) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702402457664} status=0 QTime=5
+2023-12-12 17:34:17.727 INFO  (qtp1677207406-44) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702402457664} hits=32 status=0 QTime=40
+2023-12-12 17:34:17.733 INFO  (qtp1677207406-42) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702402457621} status=0 QTime=47
+2023-12-12 17:36:10.844 INFO  (qtp1677207406-64) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=21
+2023-12-12 17:37:20.613 INFO  (qtp1677207406-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:39:41.762 INFO  (qtp1677207406-40) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:40:37.135 INFO  (qtp1677207406-36) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:41:17.333 INFO  (qtp1677207406-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:41:19.099 INFO  (qtp1677207406-44) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:41:19.324 INFO  (qtp1677207406-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:41:19.578 INFO  (qtp1677207406-66) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:42:07.459 INFO  (qtp1677207406-40) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:42:21.051 INFO  (qtp1677207406-36) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:43:14.110 INFO  (qtp1677207406-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:44:24.926 INFO  (qtp1677207406-44) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:Samsung&wt=javabin&version=2} hits=1 status=0 QTime=1
+2023-12-12 17:44:47.000 INFO  (qtp1677207406-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:a&wt=javabin&version=2} hits=1 status=0 QTime=0
+2023-12-12 17:44:57.854 INFO  (qtp1677207406-66) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:drive&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:45:28.039 INFO  (qtp1677207406-40) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:46:44.596 INFO  (qtp1677207406-36) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:46:45.350 INFO  (qtp1677207406-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:50:46.036 INFO  (qtp1677207406-64) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:50:47.511 INFO  (qtp1677207406-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:50:54.821 INFO  (qtp1677207406-66) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:51:47.463 INFO  (qtp1677207406-40) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:51:47.611 INFO  (qtp1677207406-36) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:51:48.187 INFO  (qtp1677207406-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:53:31.879 INFO  (qtp1677207406-65) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:53:33.403 INFO  (qtp1677207406-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:53:35.014 INFO  (qtp1677207406-66) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:53:46.061 INFO  (qtp1677207406-40) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:53:47.037 INFO  (qtp1677207406-36) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:17.158 INFO  (qtp1677207406-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:17.707 INFO  (qtp1677207406-65) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:18.338 INFO  (qtp1677207406-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:18.903 INFO  (qtp1677207406-66) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:19.616 INFO  (qtp1677207406-40) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:20.156 INFO  (qtp1677207406-36) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:20.348 INFO  (qtp1677207406-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:20.535 INFO  (qtp1677207406-65) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:20.708 INFO  (qtp1677207406-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:20.887 INFO  (qtp1677207406-66) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:21.069 INFO  (qtp1677207406-40) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:21.277 INFO  (qtp1677207406-36) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:21.588 INFO  (qtp1677207406-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:22.016 INFO  (qtp1677207406-65) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:22.295 INFO  (qtp1677207406-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:56.216 INFO  (qtp1677207406-66) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:56.888 INFO  (qtp1677207406-40) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:54:57.490 INFO  (qtp1677207406-36) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=name:hard&wt=javabin&version=2} hits=2 status=0 QTime=0
+2023-12-12 17:56:17.264 INFO  (ShutdownMonitor) [] o.e.j.s.Server Stopped Server@f9b7332{STOPPING}[10.0.13,sto=0]
+2023-12-12 17:56:17.266 INFO  (ShutdownMonitor) [] o.e.j.s.AbstractConnector Stopped ServerConnector@fd0e5b6{HTTP/1.1, (http/1.1, h2c)}{127.0.0.1:8983}
+2023-12-12 17:56:17.278 INFO  (ShutdownMonitor) [] o.a.s.c.CoreContainer Shutting down CoreContainer instance=1142653826
+2023-12-12 17:56:17.279 INFO  (coreCloseExecutor-18-thread-1) [ x:micoleccion] o.a.s.c.SolrCore CLOSING SolrCore org.apache.solr.core.SolrCore@176ef3fa micoleccion
+2023-12-12 17:56:17.280 INFO  (coreCloseExecutor-18-thread-1) [ x:micoleccion] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.core.micoleccion tag=SolrCore@176ef3fa
+2023-12-12 17:56:17.297 INFO  (coreCloseExecutor-18-thread-1) [ x:micoleccion] o.a.s.u.DirectUpdateHandler2 Committing on IndexWriter.close()  ... SKIPPED (unnecessary).
+2023-12-12 17:56:17.309 INFO  (ShutdownMonitor) [] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.node tag=null
+2023-12-12 17:56:17.320 INFO  (ShutdownMonitor) [] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.jvm tag=null
+2023-12-12 17:56:17.327 INFO  (ShutdownMonitor) [] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.jetty tag=null
+2023-12-12 17:56:17.334 INFO  (ShutdownMonitor) [] o.e.j.s.h.ContextHandler Stopped o.e.j.w.WebAppContext@6ca320ab{solr-jetty-context.xml,/solr,null,STOPPED}{C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server/solr-webapp/webapp}

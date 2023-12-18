@@ -1,0 +1,120 @@
+2023-12-10 22:13:29.782 INFO  (main) [] o.e.j.s.Server jetty-10.0.13; built: 2022-12-07T20:13:20.134Z; git: 1c2636ea05c0ca8de1ffd6ca7f3a98ac084c766d; jvm 19.0.1+10-21
+2023-12-10 22:13:30.482 WARN  (main) [] o.e.j.u.DeprecationWarning Using @Deprecated Class org.eclipse.jetty.servlet.listener.ELContextCleaner
+2023-12-10 22:13:30.509 INFO  (main) [] o.a.s.s.CoreContainerProvider Using logger factory org.apache.logging.slf4j.Log4jLoggerFactory
+2023-12-10 22:13:30.517 INFO  (main) [] o.a.s.s.CoreContainerProvider  ___      _       Welcome to Apache Solr™ version 9.2.0
+2023-12-10 22:13:30.518 INFO  (main) [] o.a.s.s.CoreContainerProvider / __| ___| |_ _   Starting in standalone mode on port 8983
+2023-12-10 22:13:30.518 INFO  (main) [] o.a.s.s.CoreContainerProvider \__ \/ _ \ | '_|  Install dir: C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr
+2023-12-10 22:13:30.518 INFO  (main) [] o.a.s.s.CoreContainerProvider |___/\___/_|_|    Start time: 2023-12-10T22:13:30.518490900Z
+2023-12-10 22:13:30.520 INFO  (main) [] o.a.s.s.CoreContainerProvider Solr started with "-XX:+CrashOnOutOfMemoryError" that will crash on any OutOfMemoryError exception. The cause of the OOME will be logged in the crash file at the following path: C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\logs\jvm_crash_16784.log
+2023-12-10 22:13:30.526 INFO  (main) [] o.a.s.s.CoreContainerProvider Solr Home: C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr (source: system property: solr.solr.home)
+2023-12-10 22:13:30.527 INFO  (main) [] o.a.s.c.SolrXmlConfig Loading solr.xml from C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\solr.xml
+2023-12-10 22:13:30.605 INFO  (main) [] o.a.s.c.SolrResourceLoader Added 1 libs to classloader, from paths: [/C:/Users/jhony/Desktop/UNI/23-24/MB/buscador/solr/lib]
+2023-12-10 22:13:31.665 WARN  (main) [] o.a.s.u.StartupLoggingUtils Jetty request logging enabled. Will retain logs for last 3 days. See chapter "Configuring Logging" in reference guide for how to configure.
+2023-12-10 22:13:31.668 WARN  (main) [] o.a.s.c.CoreContainer Not all security plugins configured!  authentication=disabled authorization=disabled.  Solr is only as secure as you make it. Consider configuring authentication/authorization before exposing Solr to users internal or external.  See https://s.apache.org/solrsecurity for more info
+2023-12-10 22:13:31.857 INFO  (main) [] o.a.s.c.CorePropertiesLocator Found 0 core definitions underneath C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr
+2023-12-10 22:13:32.285 INFO  (main) [] o.a.s.j.SolrRequestAuthorizer Creating a new SolrRequestAuthorizer
+2023-12-10 22:13:32.856 INFO  (main) [] o.e.j.s.h.ContextHandler Started o.e.j.w.WebAppContext@18e8473e{solr-jetty-context.xml,/solr,file:///C:/Users/jhony/Desktop/UNI/23-24/MB/buscador/solr/server/solr-webapp/webapp/,AVAILABLE}{C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server/solr-webapp/webapp}
+2023-12-10 22:13:32.862 INFO  (main) [] o.e.j.s.RequestLogWriter Opened C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\logs\2023_12_10.request.log
+2023-12-10 22:13:32.870 INFO  (main) [] o.e.j.s.AbstractConnector Started ServerConnector@44c79f32{HTTP/1.1, (http/1.1, h2c)}{127.0.0.1:8983}
+2023-12-10 22:13:32.871 INFO  (main) [] o.e.j.s.Server Started Server@6e9319f{STARTING}[10.0.13,sto=0] @4515ms
+2023-12-10 22:13:34.543 INFO  (qtp42102625-44) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json} status=0 QTime=54
+2023-12-10 22:14:00.675 INFO  (qtp42102625-35) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246440608} status=0 QTime=2
+2023-12-10 22:14:00.723 INFO  (qtp42102625-61) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246440608} status=0 QTime=50
+2023-12-10 22:14:38.044 INFO  (qtp42102625-37) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json} status=0 QTime=19
+2023-12-10 22:14:38.078 INFO  (qtp42102625-43) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json} status=0 QTime=20
+2023-12-10 22:14:38.085 INFO  (qtp42102625-61) [ x:micoleccion] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={core=micoleccion&action=STATUS&wt=json} status=0 QTime=0
+2023-12-10 22:14:38.326 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.h.a.CoreAdminOperation core create command name=micoleccion&action=CREATE&instanceDir=micoleccion&wt=json
+2023-12-10 22:14:38.351 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.c.SolrConfig Using Lucene MatchVersion: 9.4.0
+2023-12-10 22:14:38.404 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.s.IndexSchema Schema name=default-config
+2023-12-10 22:14:38.662 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.s.IndexSchema Loaded schema default-config/1.6 with uniqueid field id
+2023-12-10 22:14:38.662 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.c.CoreContainer Creating SolrCore 'micoleccion' using configuration from instancedir C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion, trusted=true
+2023-12-10 22:14:38.682 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.c.SolrCore Opening new SolrCore at [C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion], dataDir=[C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\data\]
+2023-12-10 22:14:39.388 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.j.SolrRequestAuthorizer Creating a new SolrRequestAuthorizer
+2023-12-10 22:14:39.441 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+2023-12-10 22:14:39.441 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+2023-12-10 22:14:39.448 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.u.CommitTracker Hard AutoCommit: if uncommitted for 15000ms; 
+2023-12-10 22:14:39.448 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.u.CommitTracker Soft AutoCommit: disabled
+2023-12-10 22:14:39.489 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.r.ManagedResourceStorage File-based storage initialized to use dir: C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\conf
+2023-12-10 22:14:39.503 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.s.DirectSolrSpellChecker init: {name=default, field=_text_, classname=solr.DirectSolrSpellChecker, distanceMeasure=internal, accuracy=0.5, maxQueryFrequency=0.01, maxEdits=2, minPrefix=1, maxInspections=5, minQueryLength=4}
+2023-12-10 22:14:39.511 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.h.ReplicationHandler Commits will be reserved for 10000 ms
+2023-12-10 22:14:39.515 INFO  (qtp42102625-63) [ x:micoleccion] o.a.s.u.UpdateLog Could not find max version in index or recent updates, using new clock 1784934804503920640
+2023-12-10 22:14:39.518 INFO  (searcherExecutor-12-thread-1-processing-micoleccion) [ x:micoleccion] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2023-12-10 22:14:39.518 INFO  (searcherExecutor-12-thread-1-processing-micoleccion) [ x:micoleccion] o.a.s.h.c.SpellCheckComponent Loading spell index for spellchecker: default
+2023-12-10 22:14:39.519 INFO  (qtp42102625-63) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={name=micoleccion&action=CREATE&instanceDir=micoleccion&wt=json} status=0 QTime=1193
+2023-12-10 22:14:39.527 INFO  (searcherExecutor-12-thread-1-processing-micoleccion) [ x:micoleccion] o.a.s.c.SolrCore Registered new searcher autowarm time: 0 ms
+2023-12-10 22:16:03.324 INFO  (qtp42102625-43) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246563276} status=0 QTime=0
+2023-12-10 22:16:03.359 INFO  (qtp42102625-60) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246563276} status=0 QTime=32
+2023-12-10 22:16:03.367 INFO  (qtp42102625-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246563308} status=0 QTime=5
+2023-12-10 22:16:06.680 INFO  (qtp42102625-35) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246563308} status=0 QTime=0
+2023-12-10 22:16:06.680 INFO  (qtp42102625-60) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246563276} status=0 QTime=0
+2023-12-10 22:16:06.710 INFO  (qtp42102625-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702246563308} hits=0 status=0 QTime=29
+2023-12-10 22:16:06.714 INFO  (qtp42102625-37) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246563276} status=0 QTime=33
+2023-12-10 22:17:45.051 INFO  (qtp42102625-39) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={commit=true}{commit=} 0 8
+2023-12-10 22:17:48.397 INFO  (qtp42102625-42) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246668353} status=0 QTime=0
+2023-12-10 22:17:48.397 INFO  (qtp42102625-44) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246668380} status=0 QTime=0
+2023-12-10 22:17:48.403 INFO  (qtp42102625-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702246668380} hits=0 status=0 QTime=5
+2023-12-10 22:17:48.431 INFO  (qtp42102625-38) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246668354} status=0 QTime=34
+2023-12-10 22:17:50.616 INFO  (qtp42102625-37) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246668353} status=0 QTime=0
+2023-12-10 22:17:50.616 INFO  (qtp42102625-61) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246668380} status=0 QTime=0
+2023-12-10 22:17:50.618 INFO  (qtp42102625-35) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702246668380} hits=0 status=0 QTime=1
+2023-12-10 22:17:50.652 INFO  (qtp42102625-60) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246668354} status=0 QTime=36
+2023-12-10 22:17:51.695 INFO  (qtp42102625-43) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246668353} status=0 QTime=0
+2023-12-10 22:17:51.696 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246668380} status=0 QTime=0
+2023-12-10 22:17:51.698 INFO  (qtp42102625-44) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702246668380} hits=0 status=0 QTime=2
+2023-12-10 22:17:51.741 INFO  (qtp42102625-42) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246668354} status=0 QTime=46
+2023-12-10 22:17:53.840 INFO  (qtp42102625-35) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246668353} status=0 QTime=0
+2023-12-10 22:17:53.840 INFO  (qtp42102625-61) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246668380} status=0 QTime=0
+2023-12-10 22:17:53.841 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702246668380} hits=0 status=0 QTime=1
+2023-12-10 22:17:53.881 INFO  (qtp42102625-37) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246668354} status=0 QTime=41
+2023-12-10 22:17:54.038 INFO  (qtp42102625-44) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246668353} status=0 QTime=0
+2023-12-10 22:17:54.039 INFO  (qtp42102625-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246668380} status=0 QTime=0
+2023-12-10 22:17:54.039 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702246668380} hits=0 status=0 QTime=0
+2023-12-10 22:17:54.066 INFO  (qtp42102625-43) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246668354} status=0 QTime=27
+2023-12-10 22:17:54.291 INFO  (qtp42102625-60) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246668353} status=0 QTime=0
+2023-12-10 22:17:54.294 INFO  (qtp42102625-35) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246668380} status=0 QTime=0
+2023-12-10 22:17:54.296 INFO  (qtp42102625-37) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702246668380} hits=0 status=0 QTime=2
+2023-12-10 22:17:54.343 INFO  (qtp42102625-61) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246668354} status=0 QTime=51
+2023-12-10 22:17:54.445 INFO  (qtp42102625-38) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246668353} status=0 QTime=0
+2023-12-10 22:17:54.446 INFO  (qtp42102625-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/config/params params={wt=json&_=1702246668380} status=0 QTime=0
+2023-12-10 22:17:54.446 INFO  (qtp42102625-43) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/select params={q=*:*&indent=true&q.op=OR&useParams=&_=1702246668380} hits=0 status=0 QTime=0
+2023-12-10 22:17:54.475 INFO  (qtp42102625-44) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246668354} status=0 QTime=29
+2023-12-10 22:17:56.962 INFO  (qtp42102625-44) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1702246668353} status=0 QTime=0
+2023-12-10 22:17:56.970 INFO  (qtp42102625-35) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/admin/luke params={numTerms=0&show=index&wt=json&_=1702246676951} status=0 QTime=7
+2023-12-10 22:17:56.982 INFO  (qtp42102625-61) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/replication params={wt=json&command=details&_=1702246676952} status=0 QTime=16
+2023-12-10 22:17:56.989 INFO  (qtp42102625-42) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/admin/ping params={action=status&wt=json&_=1702246668354&ts=1702246668354} status=503 QTime=5
+2023-12-10 22:17:57.048 INFO  (qtp42102625-60) [] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1702246668354} status=0 QTime=86
+2023-12-10 22:17:57.052 INFO  (qtp42102625-37) [ x:micoleccion] o.a.s.c.S.Request webapp=/solr path=/admin/system params={wt=json&_=1702246676951} status=0 QTime=81
+2023-12-10 22:18:43.136 INFO  (qtp42102625-44) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={commit=true}{commit=} 0 4
+2023-12-10 22:23:08.253 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.s.ManagedIndexSchema Upgraded to managed schema at C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\conf\managed-schema.xml
+2023-12-10 22:23:08.332 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[GB18030TEST (1784935337959620608)]} 0 282
+2023-12-10 22:23:08.520 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.s.ManagedIndexSchema Upgraded to managed schema at C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\conf\managed-schema.xml
+2023-12-10 22:23:08.571 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[SP2514N (1784935338281533440), 6H500F0 (1784935338285727744)]} 0 222
+2023-12-10 22:23:08.620 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.s.ManagedIndexSchema Upgraded to managed schema at C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\conf\managed-schema.xml
+2023-12-10 22:23:08.624 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[F8V7067-APL-KIT (1784935338340253696), IW-02 (1784935338342350848)]} 0 49
+2023-12-10 22:23:08.721 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.s.ManagedIndexSchema Upgraded to managed schema at C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\conf\managed-schema.xml
+2023-12-10 22:23:08.725 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[MA147LL/A (1784935338447208448)]} 0 97
+2023-12-10 22:23:08.735 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[adata (1784935338452451328), apple (1784935338453499904), asus (1784935338453499905), ati (1784935338454548480), belkin (1784935338454548481), canon (1784935338455597056), corsair (1784935338455597057), dell (1784935338456645632), maxtor (1784935338456645633), samsung (1784935338456645634), ... (11 adds)]} 0 7
+2023-12-10 22:23:08.823 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.s.ManagedIndexSchema Upgraded to managed schema at C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\conf\managed-schema.xml
+2023-12-10 22:23:08.827 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[TWINX2048-3200PRO (1784935338553114624), VS1GB400C3 (1784935338554163200), VDBDB1A16 (1784935338556260352)]} 0 88
+2023-12-10 22:23:08.908 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.s.ManagedIndexSchema Upgraded to managed schema at C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server\solr\micoleccion\conf\managed-schema.xml
+2023-12-10 22:23:08.911 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[USD (1784935338641195008), EUR (1784935338642243584), GBP (1784935338643292160), NOK (1784935338644340736)]} 0 80
+2023-12-10 22:23:08.916 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[3007WFP (1784935338648535040)]} 0 1
+2023-12-10 22:23:08.921 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[VA902B (1784935338653777920)]} 0 1
+2023-12-10 22:23:08.927 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[0579B002 (1784935338660069376)]} 0 2
+2023-12-10 22:23:08.932 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[9885A004 (1784935338665312256)]} 0 2
+2023-12-10 22:23:08.937 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[SOLR1000 (1784935338670555136)]} 0 1
+2023-12-10 22:23:08.943 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[UTF8TEST (1784935338675798016)]} 0 2
+2023-12-10 22:23:08.951 INFO  (qtp42102625-60) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={}{add=[EN7800GTX/2DHTV/256M (1784935338681040896), 100-435805 (1784935338685235200)]} 0 6
+2023-12-10 22:23:09.148 INFO  (searcherExecutor-12-thread-1-processing-micoleccion) [ x:micoleccion] o.a.s.c.QuerySenderListener QuerySenderListener done.
+2023-12-10 22:23:09.158 INFO  (searcherExecutor-12-thread-1-processing-micoleccion) [ x:micoleccion] o.a.s.c.SolrCore Registered new searcher autowarm time: 3 ms
+2023-12-10 22:23:09.167 INFO  (qtp42102625-38) [ x:micoleccion] o.a.s.u.p.LogUpdateProcessorFactory webapp=/solr path=/update params={commit=true}{commit=} 0 211
+2023-12-10 22:24:44.135 INFO  (ShutdownMonitor) [] o.e.j.s.Server Stopped Server@6e9319f{STOPPING}[10.0.13,sto=0]
+2023-12-10 22:24:44.138 INFO  (ShutdownMonitor) [] o.e.j.s.AbstractConnector Stopped ServerConnector@44c79f32{HTTP/1.1, (http/1.1, h2c)}{127.0.0.1:8983}
+2023-12-10 22:24:44.147 INFO  (ShutdownMonitor) [] o.a.s.c.CoreContainer Shutting down CoreContainer instance=777748410
+2023-12-10 22:24:44.178 INFO  (coreCloseExecutor-18-thread-1) [ x:micoleccion] o.a.s.c.SolrCore CLOSING SolrCore org.apache.solr.core.SolrCore@17f7b0cb micoleccion
+2023-12-10 22:24:44.178 INFO  (coreCloseExecutor-18-thread-1) [ x:micoleccion] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.core.micoleccion tag=SolrCore@17f7b0cb
+2023-12-10 22:24:44.197 INFO  (coreCloseExecutor-18-thread-1) [ x:micoleccion] o.a.s.u.DirectUpdateHandler2 Committing on IndexWriter.close()  ... SKIPPED (unnecessary).
+2023-12-10 22:24:44.204 INFO  (ShutdownMonitor) [] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.node tag=null
+2023-12-10 22:24:44.217 INFO  (ShutdownMonitor) [] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.jvm tag=null
+2023-12-10 22:24:44.223 INFO  (ShutdownMonitor) [] o.a.s.m.SolrMetricManager Closing metric reporters for registry=solr.jetty tag=null
+2023-12-10 22:24:44.229 INFO  (ShutdownMonitor) [] o.e.j.s.h.ContextHandler Stopped o.e.j.w.WebAppContext@18e8473e{solr-jetty-context.xml,/solr,null,STOPPED}{C:\Users\jhony\Desktop\UNI\23-24\MB\buscador\solr\server/solr-webapp/webapp}
