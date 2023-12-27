@@ -2,15 +2,18 @@
 <!-- Solr managed schema - automatically generated - DO NOT EDIT -->
 <schema name="default-config" version="1.6">
   <uniqueKey>id</uniqueKey>
-  <fieldType name="_nest_path_" class="solr.NestPathField" maxCharsForDocValues="-1" omitNorms="true" omitTermFreqAndPositions="true" stored="false" multiValued="false"/>
+  <fieldType name="_nest_path_" class="solr.NestPathField" omitTermFreqAndPositions="true" omitNorms="true" maxCharsForDocValues="-1" stored="false" multiValued="false"/>
   <fieldType name="ancestor_path" class="solr.TextField">
     <analyzer type="index">
       <tokenizer name="keyword"/>
     </analyzer>
     <analyzer type="query">
-      <tokenizer name="pathHierarchy" delimiter="/"/>
+      <tokenizer delimiter="/" name="pathHierarchy"/>
     </analyzer>
   </fieldType>
+  <field name="person" type="text_general" indexed="true" stored="true"/>
+ <field name="organization" type="text_general" indexed="true" stored="true"/>
+<field name="date" type="text_general" indexed="true" stored="true"/>
   <fieldType name="binary" class="solr.BinaryField"/>
   <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
   <fieldType name="booleans" class="solr.BoolField" sortMissingLast="true" multiValued="true"/>
@@ -34,7 +37,7 @@
   </fieldType>
   <fieldType name="descendent_path" class="solr.TextField">
     <analyzer type="index">
-      <tokenizer name="pathHierarchy" delimiter="/"/>
+      <tokenizer delimiter="/" name="pathHierarchy"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="keyword"/>
@@ -58,7 +61,7 @@
   <fieldType name="phonetic_en" class="solr.TextField" indexed="true" stored="false">
     <analyzer>
       <tokenizer name="standard"/>
-      <filter inject="false" name="doubleMetaphone"/>
+      <filter name="doubleMetaphone" inject="false"/>
     </analyzer>
   </fieldType>
   <fieldType name="pint" class="solr.IntPointField" docValues="true"/>
@@ -74,7 +77,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_ar.txt"/>
+      <filter words="lang/stopwords_ar.txt" ignoreCase="true" name="stop"/>
       <filter name="arabicNormalization"/>
       <filter name="arabicStem"/>
     </analyzer>
@@ -83,16 +86,16 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_bg.txt"/>
+      <filter words="lang/stopwords_bg.txt" ignoreCase="true" name="stop"/>
       <filter name="bulgarianStem"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_ca" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer name="standard"/>
-      <filter name="elision" ignoreCase="true" articles="lang/contractions_ca.txt"/>
+      <filter articles="lang/contractions_ca.txt" ignoreCase="true" name="elision"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_ca.txt"/>
+      <filter words="lang/stopwords_ca.txt" ignoreCase="true" name="stop"/>
       <filter language="Catalan" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -108,7 +111,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_cz.txt"/>
+      <filter words="lang/stopwords_cz.txt" ignoreCase="true" name="stop"/>
       <filter name="czechStem"/>
     </analyzer>
   </fieldType>
@@ -116,7 +119,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_da.txt" name="stop"/>
+      <filter words="lang/stopwords_da.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter language="Danish" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -124,7 +127,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_de.txt" name="stop"/>
+      <filter words="lang/stopwords_de.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter name="germanNormalization"/>
       <filter name="germanLightStem"/>
     </analyzer>
@@ -133,68 +136,69 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="greekLowercase"/>
-      <filter name="stop" ignoreCase="false" words="lang/stopwords_el.txt"/>
+      <filter words="lang/stopwords_el.txt" ignoreCase="false" name="stop"/>
       <filter name="greekStem"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
     <analyzer type="index">
       <tokenizer name="standard"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_en.txt"/>
+      <filter words="lang/stopwords_en.txt" ignoreCase="true" name="stop"/>
       <filter name="lowercase"/>
       <filter name="englishPossessive"/>
-      <filter protected="protwords.txt" name="keywordMarker"/>
+      <filter name="keywordMarker" protected="protwords.txt"/>
       <filter name="porterStem"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="standard"/>
-      <filter expand="true" ignoreCase="true" synonyms="synonyms.txt" name="synonymGraph"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_en.txt"/>
+      <filter synonyms="synonyms.txt" ignoreCase="true" expand="true" name="synonymGraph"/>
+      <filter words="lang/stopwords_en.txt" ignoreCase="true" name="stop"/>
+      <filter words="lang/stopwords_personalizadas.txt" ignoreCase="true" name="stop"/>
       <filter name="lowercase"/>
       <filter name="englishPossessive"/>
-      <filter protected="protwords.txt" name="keywordMarker"/>
+      <filter name="keywordMarker" protected="protwords.txt"/>
       <filter name="porterStem"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_en_splitting" class="solr.TextField" autoGeneratePhraseQueries="true" positionIncrementGap="100">
     <analyzer type="index">
       <tokenizer name="whitespace"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_en.txt"/>
-      <filter catenateNumbers="1" catenateWords="1" generateNumberParts="1" generateWordParts="1" catenateAll="0" name="wordDelimiterGraph" splitOnCaseChange="1"/>
+      <filter words="lang/stopwords_en.txt" ignoreCase="true" name="stop"/>
+      <filter catenateAll="0" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" splitOnCaseChange="1" name="wordDelimiterGraph"/>
       <filter name="lowercase"/>
-      <filter protected="protwords.txt" name="keywordMarker"/>
+      <filter name="keywordMarker" protected="protwords.txt"/>
       <filter name="porterStem"/>
       <filter name="flattenGraph"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="whitespace"/>
-      <filter expand="true" ignoreCase="true" synonyms="synonyms.txt" name="synonymGraph"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_en.txt"/>
-      <filter catenateNumbers="0" catenateWords="0" generateNumberParts="1" generateWordParts="1" catenateAll="0" name="wordDelimiterGraph" splitOnCaseChange="1"/>
+      <filter synonyms="synonyms.txt" ignoreCase="true" expand="true" name="synonymGraph"/>
+      <filter words="lang/stopwords_en.txt" ignoreCase="true" name="stop"/>
+      <filter catenateAll="0" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" splitOnCaseChange="1" name="wordDelimiterGraph"/>
       <filter name="lowercase"/>
-      <filter protected="protwords.txt" name="keywordMarker"/>
+      <filter name="keywordMarker" protected="protwords.txt"/>
       <filter name="porterStem"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_en_splitting_tight" class="solr.TextField" autoGeneratePhraseQueries="true" positionIncrementGap="100">
     <analyzer type="index">
       <tokenizer name="whitespace"/>
-      <filter expand="false" ignoreCase="true" synonyms="synonyms.txt" name="synonymGraph"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_en.txt"/>
-      <filter generateWordParts="0" catenateNumbers="1" catenateWords="1" name="wordDelimiterGraph" generateNumberParts="0" catenateAll="0"/>
+      <filter synonyms="synonyms.txt" ignoreCase="true" expand="false" name="synonymGraph"/>
+      <filter words="lang/stopwords_en.txt" ignoreCase="true" name="stop"/>
+      <filter catenateAll="0" generateNumberParts="0" name="wordDelimiterGraph" catenateWords="1" catenateNumbers="1" generateWordParts="0"/>
       <filter name="lowercase"/>
-      <filter protected="protwords.txt" name="keywordMarker"/>
+      <filter name="keywordMarker" protected="protwords.txt"/>
       <filter name="englishMinimalStem"/>
       <filter name="removeDuplicates"/>
       <filter name="flattenGraph"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="whitespace"/>
-      <filter expand="false" ignoreCase="true" synonyms="synonyms.txt" name="synonymGraph"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_en.txt"/>
-      <filter generateWordParts="0" catenateNumbers="1" catenateWords="1" name="wordDelimiterGraph" generateNumberParts="0" catenateAll="0"/>
+      <filter synonyms="synonyms.txt" ignoreCase="true" expand="false" name="synonymGraph"/>
+      <filter words="lang/stopwords_en.txt" ignoreCase="true" name="stop"/>
+      <filter catenateAll="0" generateNumberParts="0" name="wordDelimiterGraph" catenateWords="1" catenateNumbers="1" generateWordParts="0"/>
       <filter name="lowercase"/>
-      <filter protected="protwords.txt" name="keywordMarker"/>
+      <filter name="keywordMarker" protected="protwords.txt"/>
       <filter name="englishMinimalStem"/>
       <filter name="removeDuplicates"/>
     </analyzer>
@@ -203,7 +207,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_es.txt" name="stop"/>
+      <filter words="lang/stopwords_es.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter name="spanishLightStem"/>
     </analyzer>
   </fieldType>
@@ -211,7 +215,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_et.txt"/>
+      <filter words="lang/stopwords_et.txt" ignoreCase="true" name="stop"/>
       <filter language="Estonian" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -219,7 +223,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_eu.txt"/>
+      <filter words="lang/stopwords_eu.txt" ignoreCase="true" name="stop"/>
       <filter language="Basque" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -230,73 +234,73 @@
       <filter name="lowercase"/>
       <filter name="arabicNormalization"/>
       <filter name="persianNormalization"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_fa.txt"/>
+      <filter words="lang/stopwords_fa.txt" ignoreCase="true" name="stop"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_fi" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_fi.txt" name="stop"/>
+      <filter words="lang/stopwords_fi.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter language="Finnish" name="snowballPorter"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_fr" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer name="standard"/>
-      <filter name="elision" ignoreCase="true" articles="lang/contractions_fr.txt"/>
+      <filter articles="lang/contractions_fr.txt" ignoreCase="true" name="elision"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_fr.txt" name="stop"/>
+      <filter words="lang/stopwords_fr.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter name="frenchLightStem"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_ga" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer name="standard"/>
-      <filter name="elision" ignoreCase="true" articles="lang/contractions_ga.txt"/>
-      <filter name="stop" ignoreCase="true" words="lang/hyphenations_ga.txt"/>
+      <filter articles="lang/contractions_ga.txt" ignoreCase="true" name="elision"/>
+      <filter words="lang/hyphenations_ga.txt" ignoreCase="true" name="stop"/>
       <filter name="irishLowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_ga.txt"/>
+      <filter words="lang/stopwords_ga.txt" ignoreCase="true" name="stop"/>
       <filter language="Irish" name="snowballPorter"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_gen_sort" class="solr.SortableTextField" positionIncrementGap="100" multiValued="true">
     <analyzer type="index">
       <tokenizer name="standard"/>
-      <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
+      <filter words="stopwords.txt" ignoreCase="true" name="stop"/>
       <filter name="lowercase"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="standard"/>
-      <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
-      <filter expand="true" ignoreCase="true" synonyms="synonyms.txt" name="synonymGraph"/>
+      <filter words="stopwords.txt" ignoreCase="true" name="stop"/>
+      <filter synonyms="synonyms.txt" ignoreCase="true" expand="true" name="synonymGraph"/>
       <filter name="lowercase"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100" multiValued="true">
     <analyzer type="index">
       <tokenizer name="standard"/>
-      <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
+      <filter words="stopwords.txt" ignoreCase="true" name="stop"/>
       <filter name="lowercase"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="standard"/>
-      <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
-      <filter expand="true" ignoreCase="true" synonyms="synonyms.txt" name="synonymGraph"/>
+      <filter words="stopwords.txt" ignoreCase="true" name="stop"/>
+      <filter synonyms="synonyms.txt" ignoreCase="true" expand="true" name="synonymGraph"/>
       <filter name="lowercase"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_general_rev" class="solr.TextField" positionIncrementGap="100">
     <analyzer type="index">
       <tokenizer name="standard"/>
-      <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
+      <filter words="stopwords.txt" ignoreCase="true" name="stop"/>
       <filter name="lowercase"/>
-      <filter maxFractionAsterisk="0.33" name="reversedWildcard" maxPosQuestion="2" withOriginal="true" maxPosAsterisk="3"/>
+      <filter maxPosQuestion="2" name="reversedWildcard" maxFractionAsterisk="0.33" maxPosAsterisk="3" withOriginal="true"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer name="standard"/>
-      <filter expand="true" ignoreCase="true" synonyms="synonyms.txt" name="synonymGraph"/>
-      <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
+      <filter synonyms="synonyms.txt" ignoreCase="true" expand="true" name="synonymGraph"/>
+      <filter words="stopwords.txt" ignoreCase="true" name="stop"/>
       <filter name="lowercase"/>
     </analyzer>
   </fieldType>
@@ -304,7 +308,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_gl.txt"/>
+      <filter words="lang/stopwords_gl.txt" ignoreCase="true" name="stop"/>
       <filter name="galicianStem"/>
     </analyzer>
   </fieldType>
@@ -314,7 +318,7 @@
       <filter name="lowercase"/>
       <filter name="indicNormalization"/>
       <filter name="hindiNormalization"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_hi.txt"/>
+      <filter words="lang/stopwords_hi.txt" ignoreCase="true" name="stop"/>
       <filter name="hindiStem"/>
     </analyzer>
   </fieldType>
@@ -322,7 +326,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_hu.txt" name="stop"/>
+      <filter words="lang/stopwords_hu.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter language="Hungarian" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -330,7 +334,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_hy.txt"/>
+      <filter words="lang/stopwords_hy.txt" ignoreCase="true" name="stop"/>
       <filter language="Armenian" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -338,16 +342,16 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_id.txt"/>
+      <filter words="lang/stopwords_id.txt" ignoreCase="true" name="stop"/>
       <filter stemDerivational="true" name="indonesianStem"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_it" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer name="standard"/>
-      <filter name="elision" ignoreCase="true" articles="lang/contractions_it.txt"/>
+      <filter articles="lang/contractions_it.txt" ignoreCase="true" name="elision"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_it.txt" name="stop"/>
+      <filter words="lang/stopwords_it.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter name="italianLightStem"/>
     </analyzer>
   </fieldType>
@@ -357,14 +361,14 @@
       <filter name="japaneseBaseForm"/>
       <filter tags="lang/stoptags_ja.txt" name="japanesePartOfSpeechStop"/>
       <filter name="cjkWidth"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_ja.txt"/>
+      <filter words="lang/stopwords_ja.txt" ignoreCase="true" name="stop"/>
       <filter minimumLength="4" name="japaneseKatakanaStem"/>
       <filter name="lowercase"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_ko" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
-      <tokenizer name="korean" decompoundMode="discard" outputUnknownUnigrams="false"/>
+      <tokenizer outputUnknownUnigrams="false" decompoundMode="discard" name="korean"/>
       <filter name="koreanPartOfSpeechStop"/>
       <filter name="koreanReadingForm"/>
       <filter name="lowercase"/>
@@ -374,7 +378,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_lv.txt"/>
+      <filter words="lang/stopwords_lv.txt" ignoreCase="true" name="stop"/>
       <filter name="latvianStem"/>
     </analyzer>
   </fieldType>
@@ -382,8 +386,8 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_nl.txt" name="stop"/>
-      <filter name="stemmerOverride" ignoreCase="false" dictionary="lang/stemdict_nl.txt"/>
+      <filter words="lang/stopwords_nl.txt" ignoreCase="true" format="snowball" name="stop"/>
+      <filter dictionary="lang/stemdict_nl.txt" ignoreCase="false" name="stemmerOverride"/>
       <filter language="Dutch" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -391,7 +395,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_no.txt" name="stop"/>
+      <filter words="lang/stopwords_no.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter language="Norwegian" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -399,7 +403,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_pt.txt" name="stop"/>
+      <filter words="lang/stopwords_pt.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter name="portugueseLightStem"/>
     </analyzer>
   </fieldType>
@@ -407,7 +411,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_ro.txt"/>
+      <filter words="lang/stopwords_ro.txt" ignoreCase="true" name="stop"/>
       <filter language="Romanian" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -415,7 +419,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_ru.txt" name="stop"/>
+      <filter words="lang/stopwords_ru.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter language="Russian" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -423,7 +427,7 @@
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="lowercase"/>
-      <filter format="snowball" ignoreCase="true" words="lang/stopwords_sv.txt" name="stop"/>
+      <filter words="lang/stopwords_sv.txt" ignoreCase="true" format="snowball" name="stop"/>
       <filter language="Swedish" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -431,14 +435,14 @@
     <analyzer>
       <tokenizer name="thai"/>
       <filter name="lowercase"/>
-      <filter name="stop" ignoreCase="true" words="lang/stopwords_th.txt"/>
+      <filter words="lang/stopwords_th.txt" ignoreCase="true" name="stop"/>
     </analyzer>
   </fieldType>
   <fieldType name="text_tr" class="solr.TextField" positionIncrementGap="100">
     <analyzer>
       <tokenizer name="standard"/>
       <filter name="turkishLowercase"/>
-      <filter name="stop" ignoreCase="false" words="lang/stopwords_tr.txt"/>
+      <filter words="lang/stopwords_tr.txt" ignoreCase="false" name="stop"/>
       <filter language="Turkish" name="snowballPorter"/>
     </analyzer>
   </fieldType>
@@ -452,483 +456,13 @@
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
   <field name="author" type="text_general"/>
-  <field name="cat" type="text_general"/>
-  <field name="date_1" type="text_general"/>
-  <field name="date_10" type="text_general"/>
-  <field name="date_11" type="text_general"/>
-  <field name="date_12" type="text_general"/>
-  <field name="date_13" type="text_general"/>
-  <field name="date_14" type="text_general"/>
-  <field name="date_15" type="text_general"/>
-  <field name="date_16" type="plongs"/>
-  <field name="date_17" type="plongs"/>
-  <field name="date_18" type="text_general"/>
-  <field name="date_19" type="text_general"/>
-  <field name="date_2" type="text_general"/>
-  <field name="date_20" type="plongs"/>
-  <field name="date_21" type="text_general"/>
-  <field name="date_22" type="text_general"/>
-  <field name="date_23" type="text_general"/>
-  <field name="date_24" type="text_general"/>
-  <field name="date_25" type="text_general"/>
-  <field name="date_26" type="plongs"/>
-  <field name="date_27" type="text_general"/>
-  <field name="date_28" type="plongs"/>
-  <field name="date_29" type="text_general"/>
-  <field name="date_3" type="plongs"/>
-  <field name="date_30" type="plongs"/>
-  <field name="date_31" type="plongs"/>
-  <field name="date_32" type="plongs"/>
-  <field name="date_33" type="text_general"/>
-  <field name="date_34" type="text_general"/>
-  <field name="date_35" type="plongs"/>
-  <field name="date_36" type="text_general"/>
-  <field name="date_37" type="plongs"/>
-  <field name="date_38" type="text_general"/>
-  <field name="date_39" type="plongs"/>
-  <field name="date_4" type="plongs"/>
-  <field name="date_40" type="text_general"/>
-  <field name="date_41" type="text_general"/>
-  <field name="date_42" type="plongs"/>
-  <field name="date_43" type="text_general"/>
-  <field name="date_44" type="plongs"/>
-  <field name="date_45" type="text_general"/>
-  <field name="date_46" type="text_general"/>
-  <field name="date_47" type="text_general"/>
-  <field name="date_48" type="text_general"/>
-  <field name="date_49" type="plongs"/>
-  <field name="date_5" type="text_general"/>
-  <field name="date_50" type="text_general"/>
-  <field name="date_51" type="text_general"/>
-  <field name="date_52" type="text_general"/>
-  <field name="date_53" type="plongs"/>
-  <field name="date_54" type="text_general"/>
-  <field name="date_55" type="text_general"/>
-  <field name="date_56" type="text_general"/>
-  <field name="date_57" type="text_general"/>
-  <field name="date_58" type="plongs"/>
-  <field name="date_59" type="text_general"/>
-  <field name="date_6" type="text_general"/>
-  <field name="date_60" type="text_general"/>
-  <field name="date_61" type="text_general"/>
-  <field name="date_7" type="text_general"/>
-  <field name="date_8" type="plongs"/>
-  <field name="date_9" type="text_general"/>
-  <field name="features" type="text_general"/>
+  <field name="date" type="text_general"/>
   <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
-  <field name="inStock" type="booleans"/>
-  <field name="includes" type="text_general"/>
   <field name="index" type="text_general"/>
-  <field name="manu" type="text_general"/>
-  <field name="name" type="text_general"/>
-  <field name="organization_1" type="text_general"/>
-  <field name="organization_10" type="text_general"/>
-  <field name="organization_100" type="text_general"/>
-  <field name="organization_101" type="text_general"/>
-  <field name="organization_102" type="text_general"/>
-  <field name="organization_103" type="text_general"/>
-  <field name="organization_104" type="text_general"/>
-  <field name="organization_105" type="text_general"/>
-  <field name="organization_106" type="text_general"/>
-  <field name="organization_107" type="text_general"/>
-  <field name="organization_108" type="text_general"/>
-  <field name="organization_109" type="text_general"/>
-  <field name="organization_11" type="text_general"/>
-  <field name="organization_110" type="text_general"/>
-  <field name="organization_111" type="text_general"/>
-  <field name="organization_112" type="text_general"/>
-  <field name="organization_113" type="text_general"/>
-  <field name="organization_114" type="text_general"/>
-  <field name="organization_115" type="text_general"/>
-  <field name="organization_116" type="text_general"/>
-  <field name="organization_117" type="text_general"/>
-  <field name="organization_118" type="text_general"/>
-  <field name="organization_119" type="text_general"/>
-  <field name="organization_12" type="text_general"/>
-  <field name="organization_120" type="text_general"/>
-  <field name="organization_121" type="text_general"/>
-  <field name="organization_122" type="text_general"/>
-  <field name="organization_123" type="text_general"/>
-  <field name="organization_124" type="text_general"/>
-  <field name="organization_125" type="text_general"/>
-  <field name="organization_126" type="text_general"/>
-  <field name="organization_127" type="text_general"/>
-  <field name="organization_128" type="text_general"/>
-  <field name="organization_129" type="text_general"/>
-  <field name="organization_13" type="text_general"/>
-  <field name="organization_130" type="text_general"/>
-  <field name="organization_131" type="text_general"/>
-  <field name="organization_132" type="text_general"/>
-  <field name="organization_133" type="text_general"/>
-  <field name="organization_134" type="text_general"/>
-  <field name="organization_135" type="text_general"/>
-  <field name="organization_136" type="text_general"/>
-  <field name="organization_137" type="text_general"/>
-  <field name="organization_138" type="text_general"/>
-  <field name="organization_139" type="text_general"/>
-  <field name="organization_14" type="text_general"/>
-  <field name="organization_140" type="text_general"/>
-  <field name="organization_141" type="text_general"/>
-  <field name="organization_142" type="text_general"/>
-  <field name="organization_143" type="text_general"/>
-  <field name="organization_144" type="text_general"/>
-  <field name="organization_145" type="text_general"/>
-  <field name="organization_146" type="text_general"/>
-  <field name="organization_147" type="text_general"/>
-  <field name="organization_148" type="text_general"/>
-  <field name="organization_149" type="text_general"/>
-  <field name="organization_15" type="text_general"/>
-  <field name="organization_150" type="text_general"/>
-  <field name="organization_151" type="text_general"/>
-  <field name="organization_152" type="text_general"/>
-  <field name="organization_153" type="text_general"/>
-  <field name="organization_154" type="text_general"/>
-  <field name="organization_155" type="text_general"/>
-  <field name="organization_156" type="text_general"/>
-  <field name="organization_157" type="text_general"/>
-  <field name="organization_158" type="text_general"/>
-  <field name="organization_159" type="text_general"/>
-  <field name="organization_16" type="text_general"/>
-  <field name="organization_160" type="text_general"/>
-  <field name="organization_161" type="text_general"/>
-  <field name="organization_162" type="text_general"/>
-  <field name="organization_163" type="text_general"/>
-  <field name="organization_164" type="text_general"/>
-  <field name="organization_165" type="text_general"/>
-  <field name="organization_166" type="text_general"/>
-  <field name="organization_167" type="text_general"/>
-  <field name="organization_168" type="text_general"/>
-  <field name="organization_169" type="text_general"/>
-  <field name="organization_17" type="text_general"/>
-  <field name="organization_170" type="text_general"/>
-  <field name="organization_171" type="text_general"/>
-  <field name="organization_172" type="text_general"/>
-  <field name="organization_173" type="text_general"/>
-  <field name="organization_174" type="text_general"/>
-  <field name="organization_175" type="text_general"/>
-  <field name="organization_176" type="text_general"/>
-  <field name="organization_177" type="text_general"/>
-  <field name="organization_178" type="text_general"/>
-  <field name="organization_179" type="text_general"/>
-  <field name="organization_18" type="text_general"/>
-  <field name="organization_180" type="text_general"/>
-  <field name="organization_181" type="text_general"/>
-  <field name="organization_182" type="text_general"/>
-  <field name="organization_183" type="text_general"/>
-  <field name="organization_184" type="text_general"/>
-  <field name="organization_185" type="text_general"/>
-  <field name="organization_186" type="text_general"/>
-  <field name="organization_187" type="text_general"/>
-  <field name="organization_188" type="text_general"/>
-  <field name="organization_189" type="text_general"/>
-  <field name="organization_19" type="text_general"/>
-  <field name="organization_190" type="text_general"/>
-  <field name="organization_191" type="text_general"/>
-  <field name="organization_192" type="text_general"/>
-  <field name="organization_193" type="text_general"/>
-  <field name="organization_194" type="text_general"/>
-  <field name="organization_195" type="text_general"/>
-  <field name="organization_196" type="text_general"/>
-  <field name="organization_197" type="text_general"/>
-  <field name="organization_198" type="text_general"/>
-  <field name="organization_199" type="text_general"/>
-  <field name="organization_2" type="text_general"/>
-  <field name="organization_20" type="text_general"/>
-  <field name="organization_200" type="text_general"/>
-  <field name="organization_201" type="text_general"/>
-  <field name="organization_202" type="text_general"/>
-  <field name="organization_203" type="text_general"/>
-  <field name="organization_204" type="text_general"/>
-  <field name="organization_205" type="text_general"/>
-  <field name="organization_206" type="text_general"/>
-  <field name="organization_207" type="text_general"/>
-  <field name="organization_208" type="text_general"/>
-  <field name="organization_209" type="text_general"/>
-  <field name="organization_21" type="text_general"/>
-  <field name="organization_210" type="text_general"/>
-  <field name="organization_211" type="text_general"/>
-  <field name="organization_212" type="text_general"/>
-  <field name="organization_213" type="text_general"/>
-  <field name="organization_214" type="text_general"/>
-  <field name="organization_215" type="text_general"/>
-  <field name="organization_216" type="text_general"/>
-  <field name="organization_217" type="text_general"/>
-  <field name="organization_218" type="text_general"/>
-  <field name="organization_219" type="text_general"/>
-  <field name="organization_22" type="text_general"/>
-  <field name="organization_220" type="text_general"/>
-  <field name="organization_221" type="text_general"/>
-  <field name="organization_222" type="text_general"/>
-  <field name="organization_223" type="text_general"/>
-  <field name="organization_224" type="text_general"/>
-  <field name="organization_225" type="text_general"/>
-  <field name="organization_226" type="text_general"/>
-  <field name="organization_227" type="text_general"/>
-  <field name="organization_228" type="text_general"/>
-  <field name="organization_229" type="text_general"/>
-  <field name="organization_23" type="text_general"/>
-  <field name="organization_230" type="text_general"/>
-  <field name="organization_231" type="text_general"/>
-  <field name="organization_232" type="text_general"/>
-  <field name="organization_233" type="text_general"/>
-  <field name="organization_234" type="text_general"/>
-  <field name="organization_235" type="text_general"/>
-  <field name="organization_236" type="text_general"/>
-  <field name="organization_237" type="text_general"/>
-  <field name="organization_238" type="text_general"/>
-  <field name="organization_239" type="text_general"/>
-  <field name="organization_24" type="text_general"/>
-  <field name="organization_240" type="text_general"/>
-  <field name="organization_241" type="text_general"/>
-  <field name="organization_242" type="text_general"/>
-  <field name="organization_243" type="text_general"/>
-  <field name="organization_244" type="text_general"/>
-  <field name="organization_245" type="text_general"/>
-  <field name="organization_246" type="text_general"/>
-  <field name="organization_247" type="text_general"/>
-  <field name="organization_248" type="text_general"/>
-  <field name="organization_249" type="text_general"/>
-  <field name="organization_25" type="text_general"/>
-  <field name="organization_250" type="text_general"/>
-  <field name="organization_251" type="text_general"/>
-  <field name="organization_252" type="text_general"/>
-  <field name="organization_253" type="text_general"/>
-  <field name="organization_254" type="text_general"/>
-  <field name="organization_255" type="text_general"/>
-  <field name="organization_256" type="text_general"/>
-  <field name="organization_257" type="text_general"/>
-  <field name="organization_258" type="text_general"/>
-  <field name="organization_259" type="text_general"/>
-  <field name="organization_26" type="text_general"/>
-  <field name="organization_260" type="text_general"/>
-  <field name="organization_261" type="text_general"/>
-  <field name="organization_262" type="text_general"/>
-  <field name="organization_263" type="text_general"/>
-  <field name="organization_264" type="text_general"/>
-  <field name="organization_265" type="text_general"/>
-  <field name="organization_266" type="text_general"/>
-  <field name="organization_267" type="text_general"/>
-  <field name="organization_268" type="text_general"/>
-  <field name="organization_269" type="text_general"/>
-  <field name="organization_27" type="text_general"/>
-  <field name="organization_270" type="text_general"/>
-  <field name="organization_271" type="text_general"/>
-  <field name="organization_272" type="text_general"/>
-  <field name="organization_273" type="text_general"/>
-  <field name="organization_274" type="text_general"/>
-  <field name="organization_275" type="text_general"/>
-  <field name="organization_276" type="text_general"/>
-  <field name="organization_277" type="text_general"/>
-  <field name="organization_278" type="text_general"/>
-  <field name="organization_279" type="text_general"/>
-  <field name="organization_28" type="text_general"/>
-  <field name="organization_280" type="text_general"/>
-  <field name="organization_281" type="text_general"/>
-  <field name="organization_282" type="text_general"/>
-  <field name="organization_283" type="text_general"/>
-  <field name="organization_284" type="text_general"/>
-  <field name="organization_285" type="text_general"/>
-  <field name="organization_286" type="text_general"/>
-  <field name="organization_287" type="text_general"/>
-  <field name="organization_288" type="text_general"/>
-  <field name="organization_289" type="text_general"/>
-  <field name="organization_29" type="text_general"/>
-  <field name="organization_290" type="text_general"/>
-  <field name="organization_291" type="text_general"/>
-  <field name="organization_292" type="text_general"/>
-  <field name="organization_293" type="text_general"/>
-  <field name="organization_294" type="text_general"/>
-  <field name="organization_295" type="text_general"/>
-  <field name="organization_296" type="text_general"/>
-  <field name="organization_297" type="text_general"/>
-  <field name="organization_298" type="text_general"/>
-  <field name="organization_299" type="text_general"/>
-  <field name="organization_3" type="text_general"/>
-  <field name="organization_30" type="text_general"/>
-  <field name="organization_300" type="text_general"/>
-  <field name="organization_301" type="text_general"/>
-  <field name="organization_302" type="text_general"/>
-  <field name="organization_303" type="text_general"/>
-  <field name="organization_304" type="text_general"/>
-  <field name="organization_305" type="text_general"/>
-  <field name="organization_306" type="text_general"/>
-  <field name="organization_307" type="text_general"/>
-  <field name="organization_308" type="text_general"/>
-  <field name="organization_309" type="text_general"/>
-  <field name="organization_31" type="text_general"/>
-  <field name="organization_310" type="text_general"/>
-  <field name="organization_311" type="text_general"/>
-  <field name="organization_312" type="text_general"/>
-  <field name="organization_313" type="text_general"/>
-  <field name="organization_314" type="text_general"/>
-  <field name="organization_315" type="text_general"/>
-  <field name="organization_316" type="text_general"/>
-  <field name="organization_32" type="text_general"/>
-  <field name="organization_33" type="text_general"/>
-  <field name="organization_34" type="text_general"/>
-  <field name="organization_35" type="text_general"/>
-  <field name="organization_36" type="text_general"/>
-  <field name="organization_37" type="text_general"/>
-  <field name="organization_38" type="text_general"/>
-  <field name="organization_39" type="text_general"/>
-  <field name="organization_4" type="text_general"/>
-  <field name="organization_40" type="text_general"/>
-  <field name="organization_41" type="text_general"/>
-  <field name="organization_42" type="text_general"/>
-  <field name="organization_43" type="text_general"/>
-  <field name="organization_44" type="text_general"/>
-  <field name="organization_45" type="text_general"/>
-  <field name="organization_46" type="text_general"/>
-  <field name="organization_47" type="text_general"/>
-  <field name="organization_48" type="text_general"/>
-  <field name="organization_49" type="text_general"/>
-  <field name="organization_5" type="text_general"/>
-  <field name="organization_50" type="text_general"/>
-  <field name="organization_51" type="text_general"/>
-  <field name="organization_52" type="text_general"/>
-  <field name="organization_53" type="text_general"/>
-  <field name="organization_54" type="text_general"/>
-  <field name="organization_55" type="text_general"/>
-  <field name="organization_56" type="text_general"/>
-  <field name="organization_57" type="text_general"/>
-  <field name="organization_58" type="text_general"/>
-  <field name="organization_59" type="text_general"/>
-  <field name="organization_6" type="text_general"/>
-  <field name="organization_60" type="text_general"/>
-  <field name="organization_61" type="text_general"/>
-  <field name="organization_62" type="text_general"/>
-  <field name="organization_63" type="text_general"/>
-  <field name="organization_64" type="text_general"/>
-  <field name="organization_65" type="text_general"/>
-  <field name="organization_66" type="text_general"/>
-  <field name="organization_67" type="text_general"/>
-  <field name="organization_68" type="text_general"/>
-  <field name="organization_69" type="text_general"/>
-  <field name="organization_7" type="text_general"/>
-  <field name="organization_70" type="text_general"/>
-  <field name="organization_71" type="text_general"/>
-  <field name="organization_72" type="text_general"/>
-  <field name="organization_73" type="text_general"/>
-  <field name="organization_74" type="text_general"/>
-  <field name="organization_75" type="text_general"/>
-  <field name="organization_76" type="text_general"/>
-  <field name="organization_77" type="text_general"/>
-  <field name="organization_78" type="text_general"/>
-  <field name="organization_79" type="text_general"/>
-  <field name="organization_8" type="text_general"/>
-  <field name="organization_80" type="text_general"/>
-  <field name="organization_81" type="text_general"/>
-  <field name="organization_82" type="text_general"/>
-  <field name="organization_83" type="text_general"/>
-  <field name="organization_84" type="text_general"/>
-  <field name="organization_85" type="text_general"/>
-  <field name="organization_86" type="text_general"/>
-  <field name="organization_87" type="text_general"/>
-  <field name="organization_88" type="text_general"/>
-  <field name="organization_89" type="text_general"/>
-  <field name="organization_9" type="text_general"/>
-  <field name="organization_90" type="text_general"/>
-  <field name="organization_91" type="text_general"/>
-  <field name="organization_92" type="text_general"/>
-  <field name="organization_93" type="text_general"/>
-  <field name="organization_94" type="text_general"/>
-  <field name="organization_95" type="text_general"/>
-  <field name="organization_96" type="text_general"/>
-  <field name="organization_97" type="text_general"/>
-  <field name="organization_98" type="text_general"/>
-  <field name="organization_99" type="text_general"/>
-  <field name="payloads" type="text_general"/>
-  <field name="person_1" type="text_general"/>
-  <field name="person_10" type="text_general"/>
-  <field name="person_11" type="text_general"/>
-  <field name="person_12" type="text_general"/>
-  <field name="person_13" type="text_general"/>
-  <field name="person_14" type="text_general"/>
-  <field name="person_15" type="text_general"/>
-  <field name="person_16" type="text_general"/>
-  <field name="person_17" type="text_general"/>
-  <field name="person_18" type="text_general"/>
-  <field name="person_19" type="text_general"/>
-  <field name="person_2" type="text_general"/>
-  <field name="person_20" type="text_general"/>
-  <field name="person_21" type="text_general"/>
-  <field name="person_22" type="text_general"/>
-  <field name="person_23" type="text_general"/>
-  <field name="person_24" type="text_general"/>
-  <field name="person_25" type="text_general"/>
-  <field name="person_26" type="text_general"/>
-  <field name="person_27" type="text_general"/>
-  <field name="person_28" type="text_general"/>
-  <field name="person_29" type="text_general"/>
-  <field name="person_3" type="text_general"/>
-  <field name="person_30" type="text_general"/>
-  <field name="person_31" type="text_general"/>
-  <field name="person_32" type="text_general"/>
-  <field name="person_33" type="text_general"/>
-  <field name="person_34" type="text_general"/>
-  <field name="person_35" type="text_general"/>
-  <field name="person_36" type="text_general"/>
-  <field name="person_37" type="text_general"/>
-  <field name="person_38" type="text_general"/>
-  <field name="person_39" type="text_general"/>
-  <field name="person_4" type="text_general"/>
-  <field name="person_40" type="text_general"/>
-  <field name="person_41" type="text_general"/>
-  <field name="person_42" type="text_general"/>
-  <field name="person_43" type="text_general"/>
-  <field name="person_44" type="text_general"/>
-  <field name="person_45" type="text_general"/>
-  <field name="person_46" type="text_general"/>
-  <field name="person_47" type="text_general"/>
-  <field name="person_48" type="text_general"/>
-  <field name="person_49" type="text_general"/>
-  <field name="person_5" type="text_general"/>
-  <field name="person_50" type="text_general"/>
-  <field name="person_51" type="text_general"/>
-  <field name="person_52" type="text_general"/>
-  <field name="person_53" type="text_general"/>
-  <field name="person_54" type="text_general"/>
-  <field name="person_55" type="text_general"/>
-  <field name="person_56" type="text_general"/>
-  <field name="person_57" type="text_general"/>
-  <field name="person_58" type="text_general"/>
-  <field name="person_59" type="text_general"/>
-  <field name="person_6" type="text_general"/>
-  <field name="person_60" type="text_general"/>
-  <field name="person_61" type="text_general"/>
-  <field name="person_62" type="text_general"/>
-  <field name="person_63" type="text_general"/>
-  <field name="person_64" type="text_general"/>
-  <field name="person_65" type="text_general"/>
-  <field name="person_66" type="text_general"/>
-  <field name="person_67" type="text_general"/>
-  <field name="person_68" type="text_general"/>
-  <field name="person_69" type="text_general"/>
-  <field name="person_7" type="text_general"/>
-  <field name="person_70" type="text_general"/>
-  <field name="person_71" type="text_general"/>
-  <field name="person_72" type="text_general"/>
-  <field name="person_73" type="text_general"/>
-  <field name="person_74" type="text_general"/>
-  <field name="person_75" type="text_general"/>
-  <field name="person_76" type="text_general"/>
-  <field name="person_77" type="text_general"/>
-  <field name="person_78" type="text_general"/>
-  <field name="person_79" type="text_general"/>
-  <field name="person_8" type="text_general"/>
-  <field name="person_80" type="text_general"/>
-  <field name="person_81" type="text_general"/>
-  <field name="person_82" type="text_general"/>
-  <field name="person_83" type="text_general"/>
-  <field name="person_84" type="text_general"/>
-  <field name="person_9" type="text_general"/>
-  <field name="popularity" type="plongs"/>
-  <field name="price" type="pdoubles"/>
-  <field name="price_c" type="text_general"/>
-  <field name="store" type="text_general"/>
+  <field name="organization" type="text_general"/>
+  <field name="person" type="text_general"/>
   <field name="text" type="text_general"/>
   <field name="title" type="text_general"/>
-  <field name="weight" type="pdoubles"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
@@ -998,458 +532,11 @@
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_t" type="text_general" multiValued="false" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
-  <copyField source="features" dest="features_str" maxChars="256"/>
-  <copyField source="name" dest="name_str" maxChars="256"/>
-  <copyField source="cat" dest="cat_str" maxChars="256"/>
-  <copyField source="manu" dest="manu_str" maxChars="256"/>
-  <copyField source="store" dest="store_str" maxChars="256"/>
-  <copyField source="includes" dest="includes_str" maxChars="256"/>
-  <copyField source="payloads" dest="payloads_str" maxChars="256"/>
-  <copyField source="price_c" dest="price_c_str" maxChars="256"/>
   <copyField source="author" dest="author_str" maxChars="256"/>
   <copyField source="index" dest="index_str" maxChars="256"/>
   <copyField source="text" dest="text_str" maxChars="256"/>
   <copyField source="title" dest="title_str" maxChars="256"/>
-  <copyField source="person_19" dest="person_19_str" maxChars="256"/>
-  <copyField source="person_17" dest="person_17_str" maxChars="256"/>
-  <copyField source="person_18" dest="person_18_str" maxChars="256"/>
-  <copyField source="person_11" dest="person_11_str" maxChars="256"/>
-  <copyField source="person_55" dest="person_55_str" maxChars="256"/>
-  <copyField source="person_12" dest="person_12_str" maxChars="256"/>
-  <copyField source="person_56" dest="person_56_str" maxChars="256"/>
-  <copyField source="person_53" dest="person_53_str" maxChars="256"/>
-  <copyField source="person_10" dest="person_10_str" maxChars="256"/>
-  <copyField source="person_54" dest="person_54_str" maxChars="256"/>
-  <copyField source="person_15" dest="person_15_str" maxChars="256"/>
-  <copyField source="person_59" dest="person_59_str" maxChars="256"/>
-  <copyField source="person_16" dest="person_16_str" maxChars="256"/>
-  <copyField source="person_13" dest="person_13_str" maxChars="256"/>
-  <copyField source="person_57" dest="person_57_str" maxChars="256"/>
-  <copyField source="person_14" dest="person_14_str" maxChars="256"/>
-  <copyField source="person_58" dest="person_58_str" maxChars="256"/>
-  <copyField source="person_51" dest="person_51_str" maxChars="256"/>
-  <copyField source="person_52" dest="person_52_str" maxChars="256"/>
-  <copyField source="person_50" dest="person_50_str" maxChars="256"/>
-  <copyField source="person_4" dest="person_4_str" maxChars="256"/>
-  <copyField source="person_5" dest="person_5_str" maxChars="256"/>
-  <copyField source="person_2" dest="person_2_str" maxChars="256"/>
-  <copyField source="person_3" dest="person_3_str" maxChars="256"/>
-  <copyField source="person_8" dest="person_8_str" maxChars="256"/>
-  <copyField source="person_9" dest="person_9_str" maxChars="256"/>
-  <copyField source="person_6" dest="person_6_str" maxChars="256"/>
-  <copyField source="person_7" dest="person_7_str" maxChars="256"/>
-  <copyField source="person_28" dest="person_28_str" maxChars="256"/>
-  <copyField source="person_29" dest="person_29_str" maxChars="256"/>
-  <copyField source="person_1" dest="person_1_str" maxChars="256"/>
-  <copyField source="person_22" dest="person_22_str" maxChars="256"/>
-  <copyField source="person_23" dest="person_23_str" maxChars="256"/>
-  <copyField source="person_20" dest="person_20_str" maxChars="256"/>
-  <copyField source="person_21" dest="person_21_str" maxChars="256"/>
-  <copyField source="person_26" dest="person_26_str" maxChars="256"/>
-  <copyField source="person_27" dest="person_27_str" maxChars="256"/>
-  <copyField source="person_24" dest="person_24_str" maxChars="256"/>
-  <copyField source="person_25" dest="person_25_str" maxChars="256"/>
-  <copyField source="person_62" dest="person_62_str" maxChars="256"/>
-  <copyField source="person_60" dest="person_60_str" maxChars="256"/>
-  <copyField source="person_61" dest="person_61_str" maxChars="256"/>
-  <copyField source="person_39" dest="person_39_str" maxChars="256"/>
-  <copyField source="person_33" dest="person_33_str" maxChars="256"/>
-  <copyField source="person_34" dest="person_34_str" maxChars="256"/>
-  <copyField source="person_31" dest="person_31_str" maxChars="256"/>
-  <copyField source="person_32" dest="person_32_str" maxChars="256"/>
-  <copyField source="person_37" dest="person_37_str" maxChars="256"/>
-  <copyField source="person_38" dest="person_38_str" maxChars="256"/>
-  <copyField source="person_35" dest="person_35_str" maxChars="256"/>
-  <copyField source="person_36" dest="person_36_str" maxChars="256"/>
-  <copyField source="person_30" dest="person_30_str" maxChars="256"/>
-  <copyField source="person_44" dest="person_44_str" maxChars="256"/>
-  <copyField source="person_45" dest="person_45_str" maxChars="256"/>
-  <copyField source="person_42" dest="person_42_str" maxChars="256"/>
-  <copyField source="person_43" dest="person_43_str" maxChars="256"/>
-  <copyField source="person_48" dest="person_48_str" maxChars="256"/>
-  <copyField source="person_49" dest="person_49_str" maxChars="256"/>
-  <copyField source="person_46" dest="person_46_str" maxChars="256"/>
-  <copyField source="person_47" dest="person_47_str" maxChars="256"/>
-  <copyField source="person_40" dest="person_40_str" maxChars="256"/>
-  <copyField source="person_41" dest="person_41_str" maxChars="256"/>
-  <copyField source="person_64" dest="person_64_str" maxChars="256"/>
-  <copyField source="person_63" dest="person_63_str" maxChars="256"/>
-  <copyField source="person_65" dest="person_65_str" maxChars="256"/>
-  <copyField source="person_66" dest="person_66_str" maxChars="256"/>
-  <copyField source="person_67" dest="person_67_str" maxChars="256"/>
-  <copyField source="person_68" dest="person_68_str" maxChars="256"/>
-  <copyField source="person_69" dest="person_69_str" maxChars="256"/>
-  <copyField source="person_70" dest="person_70_str" maxChars="256"/>
-  <copyField source="person_71" dest="person_71_str" maxChars="256"/>
-  <copyField source="person_72" dest="person_72_str" maxChars="256"/>
-  <copyField source="person_73" dest="person_73_str" maxChars="256"/>
-  <copyField source="person_74" dest="person_74_str" maxChars="256"/>
-  <copyField source="person_75" dest="person_75_str" maxChars="256"/>
-  <copyField source="person_76" dest="person_76_str" maxChars="256"/>
-  <copyField source="person_77" dest="person_77_str" maxChars="256"/>
-  <copyField source="person_78" dest="person_78_str" maxChars="256"/>
-  <copyField source="person_79" dest="person_79_str" maxChars="256"/>
-  <copyField source="person_80" dest="person_80_str" maxChars="256"/>
-  <copyField source="person_81" dest="person_81_str" maxChars="256"/>
-  <copyField source="person_82" dest="person_82_str" maxChars="256"/>
-  <copyField source="person_83" dest="person_83_str" maxChars="256"/>
-  <copyField source="person_84" dest="person_84_str" maxChars="256"/>
-  <copyField source="organization_1" dest="organization_1_str" maxChars="256"/>
-  <copyField source="organization_2" dest="organization_2_str" maxChars="256"/>
-  <copyField source="organization_3" dest="organization_3_str" maxChars="256"/>
-  <copyField source="organization_6" dest="organization_6_str" maxChars="256"/>
-  <copyField source="organization_4" dest="organization_4_str" maxChars="256"/>
-  <copyField source="organization_5" dest="organization_5_str" maxChars="256"/>
-  <copyField source="date_1" dest="date_1_str" maxChars="256"/>
-  <copyField source="date_2" dest="date_2_str" maxChars="256"/>
-  <copyField source="organization_7" dest="organization_7_str" maxChars="256"/>
-  <copyField source="organization_8" dest="organization_8_str" maxChars="256"/>
-  <copyField source="organization_9" dest="organization_9_str" maxChars="256"/>
-  <copyField source="organization_10" dest="organization_10_str" maxChars="256"/>
-  <copyField source="date_5" dest="date_5_str" maxChars="256"/>
-  <copyField source="organization_11" dest="organization_11_str" maxChars="256"/>
-  <copyField source="date_6" dest="date_6_str" maxChars="256"/>
-  <copyField source="organization_12" dest="organization_12_str" maxChars="256"/>
-  <copyField source="organization_13" dest="organization_13_str" maxChars="256"/>
-  <copyField source="organization_14" dest="organization_14_str" maxChars="256"/>
-  <copyField source="date_7" dest="date_7_str" maxChars="256"/>
-  <copyField source="organization_15" dest="organization_15_str" maxChars="256"/>
-  <copyField source="organization_16" dest="organization_16_str" maxChars="256"/>
-  <copyField source="organization_17" dest="organization_17_str" maxChars="256"/>
-  <copyField source="organization_18" dest="organization_18_str" maxChars="256"/>
-  <copyField source="organization_19" dest="organization_19_str" maxChars="256"/>
-  <copyField source="organization_20" dest="organization_20_str" maxChars="256"/>
-  <copyField source="organization_21" dest="organization_21_str" maxChars="256"/>
-  <copyField source="date_9" dest="date_9_str" maxChars="256"/>
-  <copyField source="organization_22" dest="organization_22_str" maxChars="256"/>
-  <copyField source="organization_23" dest="organization_23_str" maxChars="256"/>
-  <copyField source="date_10" dest="date_10_str" maxChars="256"/>
-  <copyField source="organization_24" dest="organization_24_str" maxChars="256"/>
-  <copyField source="organization_25" dest="organization_25_str" maxChars="256"/>
-  <copyField source="organization_26" dest="organization_26_str" maxChars="256"/>
-  <copyField source="date_11" dest="date_11_str" maxChars="256"/>
-  <copyField source="organization_27" dest="organization_27_str" maxChars="256"/>
-  <copyField source="date_12" dest="date_12_str" maxChars="256"/>
-  <copyField source="organization_28" dest="organization_28_str" maxChars="256"/>
-  <copyField source="organization_29" dest="organization_29_str" maxChars="256"/>
-  <copyField source="organization_30" dest="organization_30_str" maxChars="256"/>
-  <copyField source="organization_31" dest="organization_31_str" maxChars="256"/>
-  <copyField source="organization_32" dest="organization_32_str" maxChars="256"/>
-  <copyField source="organization_33" dest="organization_33_str" maxChars="256"/>
-  <copyField source="date_13" dest="date_13_str" maxChars="256"/>
-  <copyField source="organization_34" dest="organization_34_str" maxChars="256"/>
-  <copyField source="date_14" dest="date_14_str" maxChars="256"/>
-  <copyField source="organization_35" dest="organization_35_str" maxChars="256"/>
-  <copyField source="organization_37" dest="organization_37_str" maxChars="256"/>
-  <copyField source="date_15" dest="date_15_str" maxChars="256"/>
-  <copyField source="organization_36" dest="organization_36_str" maxChars="256"/>
-  <copyField source="organization_38" dest="organization_38_str" maxChars="256"/>
-  <copyField source="organization_39" dest="organization_39_str" maxChars="256"/>
-  <copyField source="organization_40" dest="organization_40_str" maxChars="256"/>
-  <copyField source="organization_41" dest="organization_41_str" maxChars="256"/>
-  <copyField source="organization_42" dest="organization_42_str" maxChars="256"/>
-  <copyField source="organization_43" dest="organization_43_str" maxChars="256"/>
-  <copyField source="organization_44" dest="organization_44_str" maxChars="256"/>
-  <copyField source="organization_45" dest="organization_45_str" maxChars="256"/>
-  <copyField source="organization_46" dest="organization_46_str" maxChars="256"/>
-  <copyField source="organization_47" dest="organization_47_str" maxChars="256"/>
-  <copyField source="organization_48" dest="organization_48_str" maxChars="256"/>
-  <copyField source="organization_49" dest="organization_49_str" maxChars="256"/>
-  <copyField source="organization_50" dest="organization_50_str" maxChars="256"/>
-  <copyField source="organization_51" dest="organization_51_str" maxChars="256"/>
-  <copyField source="organization_52" dest="organization_52_str" maxChars="256"/>
-  <copyField source="organization_53" dest="organization_53_str" maxChars="256"/>
-  <copyField source="organization_54" dest="organization_54_str" maxChars="256"/>
-  <copyField source="organization_55" dest="organization_55_str" maxChars="256"/>
-  <copyField source="organization_56" dest="organization_56_str" maxChars="256"/>
-  <copyField source="date_18" dest="date_18_str" maxChars="256"/>
-  <copyField source="organization_59" dest="organization_59_str" maxChars="256"/>
-  <copyField source="organization_57" dest="organization_57_str" maxChars="256"/>
-  <copyField source="organization_58" dest="organization_58_str" maxChars="256"/>
-  <copyField source="organization_60" dest="organization_60_str" maxChars="256"/>
-  <copyField source="organization_61" dest="organization_61_str" maxChars="256"/>
-  <copyField source="organization_62" dest="organization_62_str" maxChars="256"/>
-  <copyField source="organization_63" dest="organization_63_str" maxChars="256"/>
-  <copyField source="organization_64" dest="organization_64_str" maxChars="256"/>
-  <copyField source="organization_65" dest="organization_65_str" maxChars="256"/>
-  <copyField source="organization_66" dest="organization_66_str" maxChars="256"/>
-  <copyField source="organization_67" dest="organization_67_str" maxChars="256"/>
-  <copyField source="organization_68" dest="organization_68_str" maxChars="256"/>
-  <copyField source="organization_69" dest="organization_69_str" maxChars="256"/>
-  <copyField source="organization_70" dest="organization_70_str" maxChars="256"/>
-  <copyField source="organization_71" dest="organization_71_str" maxChars="256"/>
-  <copyField source="organization_72" dest="organization_72_str" maxChars="256"/>
-  <copyField source="organization_73" dest="organization_73_str" maxChars="256"/>
-  <copyField source="organization_74" dest="organization_74_str" maxChars="256"/>
-  <copyField source="organization_75" dest="organization_75_str" maxChars="256"/>
-  <copyField source="organization_76" dest="organization_76_str" maxChars="256"/>
-  <copyField source="organization_77" dest="organization_77_str" maxChars="256"/>
-  <copyField source="organization_78" dest="organization_78_str" maxChars="256"/>
-  <copyField source="organization_80" dest="organization_80_str" maxChars="256"/>
-  <copyField source="organization_81" dest="organization_81_str" maxChars="256"/>
-  <copyField source="organization_79" dest="organization_79_str" maxChars="256"/>
-  <copyField source="organization_82" dest="organization_82_str" maxChars="256"/>
-  <copyField source="organization_83" dest="organization_83_str" maxChars="256"/>
-  <copyField source="organization_84" dest="organization_84_str" maxChars="256"/>
-  <copyField source="organization_85" dest="organization_85_str" maxChars="256"/>
-  <copyField source="organization_86" dest="organization_86_str" maxChars="256"/>
-  <copyField source="date_19" dest="date_19_str" maxChars="256"/>
-  <copyField source="organization_87" dest="organization_87_str" maxChars="256"/>
-  <copyField source="organization_90" dest="organization_90_str" maxChars="256"/>
-  <copyField source="organization_88" dest="organization_88_str" maxChars="256"/>
-  <copyField source="organization_89" dest="organization_89_str" maxChars="256"/>
-  <copyField source="organization_91" dest="organization_91_str" maxChars="256"/>
-  <copyField source="organization_92" dest="organization_92_str" maxChars="256"/>
-  <copyField source="organization_93" dest="organization_93_str" maxChars="256"/>
-  <copyField source="organization_94" dest="organization_94_str" maxChars="256"/>
-  <copyField source="organization_95" dest="organization_95_str" maxChars="256"/>
-  <copyField source="date_21" dest="date_21_str" maxChars="256"/>
-  <copyField source="organization_96" dest="organization_96_str" maxChars="256"/>
-  <copyField source="organization_97" dest="organization_97_str" maxChars="256"/>
-  <copyField source="organization_98" dest="organization_98_str" maxChars="256"/>
-  <copyField source="organization_99" dest="organization_99_str" maxChars="256"/>
-  <copyField source="organization_100" dest="organization_100_str" maxChars="256"/>
-  <copyField source="date_22" dest="date_22_str" maxChars="256"/>
-  <copyField source="organization_101" dest="organization_101_str" maxChars="256"/>
-  <copyField source="date_23" dest="date_23_str" maxChars="256"/>
-  <copyField source="date_24" dest="date_24_str" maxChars="256"/>
-  <copyField source="organization_102" dest="organization_102_str" maxChars="256"/>
-  <copyField source="date_25" dest="date_25_str" maxChars="256"/>
-  <copyField source="organization_103" dest="organization_103_str" maxChars="256"/>
-  <copyField source="organization_104" dest="organization_104_str" maxChars="256"/>
-  <copyField source="organization_105" dest="organization_105_str" maxChars="256"/>
-  <copyField source="organization_106" dest="organization_106_str" maxChars="256"/>
-  <copyField source="organization_107" dest="organization_107_str" maxChars="256"/>
-  <copyField source="organization_108" dest="organization_108_str" maxChars="256"/>
-  <copyField source="organization_109" dest="organization_109_str" maxChars="256"/>
-  <copyField source="organization_110" dest="organization_110_str" maxChars="256"/>
-  <copyField source="organization_111" dest="organization_111_str" maxChars="256"/>
-  <copyField source="organization_112" dest="organization_112_str" maxChars="256"/>
-  <copyField source="date_27" dest="date_27_str" maxChars="256"/>
-  <copyField source="organization_113" dest="organization_113_str" maxChars="256"/>
-  <copyField source="date_29" dest="date_29_str" maxChars="256"/>
-  <copyField source="organization_114" dest="organization_114_str" maxChars="256"/>
-  <copyField source="organization_115" dest="organization_115_str" maxChars="256"/>
-  <copyField source="organization_117" dest="organization_117_str" maxChars="256"/>
-  <copyField source="organization_116" dest="organization_116_str" maxChars="256"/>
-  <copyField source="organization_119" dest="organization_119_str" maxChars="256"/>
-  <copyField source="organization_118" dest="organization_118_str" maxChars="256"/>
-  <copyField source="organization_120" dest="organization_120_str" maxChars="256"/>
-  <copyField source="organization_122" dest="organization_122_str" maxChars="256"/>
-  <copyField source="organization_121" dest="organization_121_str" maxChars="256"/>
-  <copyField source="organization_124" dest="organization_124_str" maxChars="256"/>
-  <copyField source="organization_123" dest="organization_123_str" maxChars="256"/>
-  <copyField source="organization_125" dest="organization_125_str" maxChars="256"/>
-  <copyField source="organization_126" dest="organization_126_str" maxChars="256"/>
-  <copyField source="organization_128" dest="organization_128_str" maxChars="256"/>
-  <copyField source="organization_127" dest="organization_127_str" maxChars="256"/>
-  <copyField source="organization_130" dest="organization_130_str" maxChars="256"/>
-  <copyField source="organization_129" dest="organization_129_str" maxChars="256"/>
-  <copyField source="organization_131" dest="organization_131_str" maxChars="256"/>
-  <copyField source="organization_132" dest="organization_132_str" maxChars="256"/>
-  <copyField source="organization_133" dest="organization_133_str" maxChars="256"/>
-  <copyField source="organization_134" dest="organization_134_str" maxChars="256"/>
-  <copyField source="organization_135" dest="organization_135_str" maxChars="256"/>
-  <copyField source="organization_136" dest="organization_136_str" maxChars="256"/>
-  <copyField source="organization_137" dest="organization_137_str" maxChars="256"/>
-  <copyField source="organization_139" dest="organization_139_str" maxChars="256"/>
-  <copyField source="organization_138" dest="organization_138_str" maxChars="256"/>
-  <copyField source="organization_140" dest="organization_140_str" maxChars="256"/>
-  <copyField source="organization_141" dest="organization_141_str" maxChars="256"/>
-  <copyField source="date_33" dest="date_33_str" maxChars="256"/>
-  <copyField source="organization_142" dest="organization_142_str" maxChars="256"/>
-  <copyField source="organization_143" dest="organization_143_str" maxChars="256"/>
-  <copyField source="date_34" dest="date_34_str" maxChars="256"/>
-  <copyField source="organization_144" dest="organization_144_str" maxChars="256"/>
-  <copyField source="organization_145" dest="organization_145_str" maxChars="256"/>
-  <copyField source="organization_146" dest="organization_146_str" maxChars="256"/>
-  <copyField source="organization_150" dest="organization_150_str" maxChars="256"/>
-  <copyField source="organization_148" dest="organization_148_str" maxChars="256"/>
-  <copyField source="organization_147" dest="organization_147_str" maxChars="256"/>
-  <copyField source="organization_149" dest="organization_149_str" maxChars="256"/>
-  <copyField source="organization_151" dest="organization_151_str" maxChars="256"/>
-  <copyField source="organization_152" dest="organization_152_str" maxChars="256"/>
-  <copyField source="organization_153" dest="organization_153_str" maxChars="256"/>
-  <copyField source="date_36" dest="date_36_str" maxChars="256"/>
-  <copyField source="organization_154" dest="organization_154_str" maxChars="256"/>
-  <copyField source="organization_155" dest="organization_155_str" maxChars="256"/>
-  <copyField source="organization_156" dest="organization_156_str" maxChars="256"/>
-  <copyField source="organization_157" dest="organization_157_str" maxChars="256"/>
-  <copyField source="date_38" dest="date_38_str" maxChars="256"/>
-  <copyField source="organization_158" dest="organization_158_str" maxChars="256"/>
-  <copyField source="organization_159" dest="organization_159_str" maxChars="256"/>
-  <copyField source="date_40" dest="date_40_str" maxChars="256"/>
-  <copyField source="organization_160" dest="organization_160_str" maxChars="256"/>
-  <copyField source="organization_161" dest="organization_161_str" maxChars="256"/>
-  <copyField source="organization_162" dest="organization_162_str" maxChars="256"/>
-  <copyField source="organization_163" dest="organization_163_str" maxChars="256"/>
-  <copyField source="organization_164" dest="organization_164_str" maxChars="256"/>
-  <copyField source="organization_165" dest="organization_165_str" maxChars="256"/>
-  <copyField source="organization_166" dest="organization_166_str" maxChars="256"/>
-  <copyField source="organization_168" dest="organization_168_str" maxChars="256"/>
-  <copyField source="organization_167" dest="organization_167_str" maxChars="256"/>
-  <copyField source="organization_169" dest="organization_169_str" maxChars="256"/>
-  <copyField source="organization_170" dest="organization_170_str" maxChars="256"/>
-  <copyField source="organization_171" dest="organization_171_str" maxChars="256"/>
-  <copyField source="organization_172" dest="organization_172_str" maxChars="256"/>
-  <copyField source="organization_173" dest="organization_173_str" maxChars="256"/>
-  <copyField source="organization_174" dest="organization_174_str" maxChars="256"/>
-  <copyField source="date_41" dest="date_41_str" maxChars="256"/>
-  <copyField source="organization_175" dest="organization_175_str" maxChars="256"/>
-  <copyField source="organization_177" dest="organization_177_str" maxChars="256"/>
-  <copyField source="organization_176" dest="organization_176_str" maxChars="256"/>
-  <copyField source="organization_178" dest="organization_178_str" maxChars="256"/>
-  <copyField source="organization_179" dest="organization_179_str" maxChars="256"/>
-  <copyField source="organization_180" dest="organization_180_str" maxChars="256"/>
-  <copyField source="organization_182" dest="organization_182_str" maxChars="256"/>
-  <copyField source="organization_181" dest="organization_181_str" maxChars="256"/>
-  <copyField source="organization_183" dest="organization_183_str" maxChars="256"/>
-  <copyField source="organization_184" dest="organization_184_str" maxChars="256"/>
-  <copyField source="organization_186" dest="organization_186_str" maxChars="256"/>
-  <copyField source="organization_185" dest="organization_185_str" maxChars="256"/>
-  <copyField source="organization_188" dest="organization_188_str" maxChars="256"/>
-  <copyField source="organization_187" dest="organization_187_str" maxChars="256"/>
-  <copyField source="organization_189" dest="organization_189_str" maxChars="256"/>
-  <copyField source="organization_190" dest="organization_190_str" maxChars="256"/>
-  <copyField source="organization_191" dest="organization_191_str" maxChars="256"/>
-  <copyField source="organization_192" dest="organization_192_str" maxChars="256"/>
-  <copyField source="organization_193" dest="organization_193_str" maxChars="256"/>
-  <copyField source="organization_194" dest="organization_194_str" maxChars="256"/>
-  <copyField source="organization_195" dest="organization_195_str" maxChars="256"/>
-  <copyField source="organization_196" dest="organization_196_str" maxChars="256"/>
-  <copyField source="organization_197" dest="organization_197_str" maxChars="256"/>
-  <copyField source="organization_199" dest="organization_199_str" maxChars="256"/>
-  <copyField source="organization_198" dest="organization_198_str" maxChars="256"/>
-  <copyField source="organization_201" dest="organization_201_str" maxChars="256"/>
-  <copyField source="organization_200" dest="organization_200_str" maxChars="256"/>
-  <copyField source="organization_203" dest="organization_203_str" maxChars="256"/>
-  <copyField source="organization_202" dest="organization_202_str" maxChars="256"/>
-  <copyField source="organization_204" dest="organization_204_str" maxChars="256"/>
-  <copyField source="organization_205" dest="organization_205_str" maxChars="256"/>
-  <copyField source="organization_206" dest="organization_206_str" maxChars="256"/>
-  <copyField source="organization_207" dest="organization_207_str" maxChars="256"/>
-  <copyField source="organization_210" dest="organization_210_str" maxChars="256"/>
-  <copyField source="organization_209" dest="organization_209_str" maxChars="256"/>
-  <copyField source="organization_208" dest="organization_208_str" maxChars="256"/>
-  <copyField source="organization_211" dest="organization_211_str" maxChars="256"/>
-  <copyField source="organization_212" dest="organization_212_str" maxChars="256"/>
-  <copyField source="organization_213" dest="organization_213_str" maxChars="256"/>
-  <copyField source="organization_214" dest="organization_214_str" maxChars="256"/>
-  <copyField source="date_43" dest="date_43_str" maxChars="256"/>
-  <copyField source="organization_216" dest="organization_216_str" maxChars="256"/>
-  <copyField source="organization_215" dest="organization_215_str" maxChars="256"/>
-  <copyField source="organization_217" dest="organization_217_str" maxChars="256"/>
-  <copyField source="organization_220" dest="organization_220_str" maxChars="256"/>
-  <copyField source="organization_218" dest="organization_218_str" maxChars="256"/>
-  <copyField source="organization_219" dest="organization_219_str" maxChars="256"/>
-  <copyField source="organization_221" dest="organization_221_str" maxChars="256"/>
-  <copyField source="organization_223" dest="organization_223_str" maxChars="256"/>
-  <copyField source="organization_222" dest="organization_222_str" maxChars="256"/>
-  <copyField source="organization_225" dest="organization_225_str" maxChars="256"/>
-  <copyField source="organization_224" dest="organization_224_str" maxChars="256"/>
-  <copyField source="date_45" dest="date_45_str" maxChars="256"/>
-  <copyField source="organization_226" dest="organization_226_str" maxChars="256"/>
-  <copyField source="organization_227" dest="organization_227_str" maxChars="256"/>
-  <copyField source="organization_228" dest="organization_228_str" maxChars="256"/>
-  <copyField source="organization_230" dest="organization_230_str" maxChars="256"/>
-  <copyField source="organization_232" dest="organization_232_str" maxChars="256"/>
-  <copyField source="organization_231" dest="organization_231_str" maxChars="256"/>
-  <copyField source="organization_229" dest="organization_229_str" maxChars="256"/>
-  <copyField source="date_46" dest="date_46_str" maxChars="256"/>
-  <copyField source="date_47" dest="date_47_str" maxChars="256"/>
-  <copyField source="organization_233" dest="organization_233_str" maxChars="256"/>
-  <copyField source="organization_234" dest="organization_234_str" maxChars="256"/>
-  <copyField source="organization_235" dest="organization_235_str" maxChars="256"/>
-  <copyField source="organization_236" dest="organization_236_str" maxChars="256"/>
-  <copyField source="organization_237" dest="organization_237_str" maxChars="256"/>
-  <copyField source="organization_238" dest="organization_238_str" maxChars="256"/>
-  <copyField source="organization_239" dest="organization_239_str" maxChars="256"/>
-  <copyField source="date_48" dest="date_48_str" maxChars="256"/>
-  <copyField source="organization_241" dest="organization_241_str" maxChars="256"/>
-  <copyField source="organization_240" dest="organization_240_str" maxChars="256"/>
-  <copyField source="organization_242" dest="organization_242_str" maxChars="256"/>
-  <copyField source="date_50" dest="date_50_str" maxChars="256"/>
-  <copyField source="organization_243" dest="organization_243_str" maxChars="256"/>
-  <copyField source="organization_244" dest="organization_244_str" maxChars="256"/>
-  <copyField source="organization_245" dest="organization_245_str" maxChars="256"/>
-  <copyField source="organization_247" dest="organization_247_str" maxChars="256"/>
-  <copyField source="organization_246" dest="organization_246_str" maxChars="256"/>
-  <copyField source="organization_248" dest="organization_248_str" maxChars="256"/>
-  <copyField source="organization_249" dest="organization_249_str" maxChars="256"/>
-  <copyField source="date_51" dest="date_51_str" maxChars="256"/>
-  <copyField source="organization_250" dest="organization_250_str" maxChars="256"/>
-  <copyField source="organization_251" dest="organization_251_str" maxChars="256"/>
-  <copyField source="organization_252" dest="organization_252_str" maxChars="256"/>
-  <copyField source="organization_253" dest="organization_253_str" maxChars="256"/>
-  <copyField source="organization_254" dest="organization_254_str" maxChars="256"/>
-  <copyField source="organization_255" dest="organization_255_str" maxChars="256"/>
-  <copyField source="date_52" dest="date_52_str" maxChars="256"/>
-  <copyField source="organization_256" dest="organization_256_str" maxChars="256"/>
-  <copyField source="organization_258" dest="organization_258_str" maxChars="256"/>
-  <copyField source="organization_257" dest="organization_257_str" maxChars="256"/>
-  <copyField source="organization_259" dest="organization_259_str" maxChars="256"/>
-  <copyField source="organization_260" dest="organization_260_str" maxChars="256"/>
-  <copyField source="organization_261" dest="organization_261_str" maxChars="256"/>
-  <copyField source="organization_263" dest="organization_263_str" maxChars="256"/>
-  <copyField source="organization_262" dest="organization_262_str" maxChars="256"/>
-  <copyField source="organization_265" dest="organization_265_str" maxChars="256"/>
-  <copyField source="organization_264" dest="organization_264_str" maxChars="256"/>
-  <copyField source="organization_266" dest="organization_266_str" maxChars="256"/>
-  <copyField source="organization_267" dest="organization_267_str" maxChars="256"/>
-  <copyField source="date_54" dest="date_54_str" maxChars="256"/>
-  <copyField source="date_55" dest="date_55_str" maxChars="256"/>
-  <copyField source="organization_269" dest="organization_269_str" maxChars="256"/>
-  <copyField source="organization_268" dest="organization_268_str" maxChars="256"/>
-  <copyField source="organization_270" dest="organization_270_str" maxChars="256"/>
-  <copyField source="organization_272" dest="organization_272_str" maxChars="256"/>
-  <copyField source="organization_271" dest="organization_271_str" maxChars="256"/>
-  <copyField source="date_56" dest="date_56_str" maxChars="256"/>
-  <copyField source="organization_273" dest="organization_273_str" maxChars="256"/>
-  <copyField source="organization_274" dest="organization_274_str" maxChars="256"/>
-  <copyField source="organization_275" dest="organization_275_str" maxChars="256"/>
-  <copyField source="organization_276" dest="organization_276_str" maxChars="256"/>
-  <copyField source="organization_277" dest="organization_277_str" maxChars="256"/>
-  <copyField source="organization_278" dest="organization_278_str" maxChars="256"/>
-  <copyField source="organization_279" dest="organization_279_str" maxChars="256"/>
-  <copyField source="organization_281" dest="organization_281_str" maxChars="256"/>
-  <copyField source="organization_280" dest="organization_280_str" maxChars="256"/>
-  <copyField source="organization_282" dest="organization_282_str" maxChars="256"/>
-  <copyField source="organization_283" dest="organization_283_str" maxChars="256"/>
-  <copyField source="organization_284" dest="organization_284_str" maxChars="256"/>
-  <copyField source="date_57" dest="date_57_str" maxChars="256"/>
-  <copyField source="organization_285" dest="organization_285_str" maxChars="256"/>
-  <copyField source="organization_286" dest="organization_286_str" maxChars="256"/>
-  <copyField source="organization_287" dest="organization_287_str" maxChars="256"/>
-  <copyField source="organization_289" dest="organization_289_str" maxChars="256"/>
-  <copyField source="organization_288" dest="organization_288_str" maxChars="256"/>
-  <copyField source="organization_290" dest="organization_290_str" maxChars="256"/>
-  <copyField source="organization_291" dest="organization_291_str" maxChars="256"/>
-  <copyField source="organization_292" dest="organization_292_str" maxChars="256"/>
-  <copyField source="organization_294" dest="organization_294_str" maxChars="256"/>
-  <copyField source="organization_293" dest="organization_293_str" maxChars="256"/>
-  <copyField source="organization_296" dest="organization_296_str" maxChars="256"/>
-  <copyField source="organization_295" dest="organization_295_str" maxChars="256"/>
-  <copyField source="organization_298" dest="organization_298_str" maxChars="256"/>
-  <copyField source="organization_297" dest="organization_297_str" maxChars="256"/>
-  <copyField source="organization_299" dest="organization_299_str" maxChars="256"/>
-  <copyField source="organization_300" dest="organization_300_str" maxChars="256"/>
-  <copyField source="organization_301" dest="organization_301_str" maxChars="256"/>
-  <copyField source="organization_302" dest="organization_302_str" maxChars="256"/>
-  <copyField source="organization_304" dest="organization_304_str" maxChars="256"/>
-  <copyField source="organization_303" dest="organization_303_str" maxChars="256"/>
-  <copyField source="organization_305" dest="organization_305_str" maxChars="256"/>
-  <copyField source="organization_306" dest="organization_306_str" maxChars="256"/>
-  <copyField source="date_59" dest="date_59_str" maxChars="256"/>
-  <copyField source="date_60" dest="date_60_str" maxChars="256"/>
-  <copyField source="organization_308" dest="organization_308_str" maxChars="256"/>
-  <copyField source="organization_307" dest="organization_307_str" maxChars="256"/>
-  <copyField source="organization_309" dest="organization_309_str" maxChars="256"/>
-  <copyField source="organization_311" dest="organization_311_str" maxChars="256"/>
-  <copyField source="organization_310" dest="organization_310_str" maxChars="256"/>
-  <copyField source="organization_313" dest="organization_313_str" maxChars="256"/>
-  <copyField source="organization_312" dest="organization_312_str" maxChars="256"/>
-  <copyField source="organization_315" dest="organization_315_str" maxChars="256"/>
-  <copyField source="organization_314" dest="organization_314_str" maxChars="256"/>
-  <copyField source="organization_316" dest="organization_316_str" maxChars="256"/>
-  <copyField source="date_61" dest="date_61_str" maxChars="256"/>
+  <copyField source="person" dest="person_str" maxChars="256"/>
+  <copyField source="organization" dest="organization_str" maxChars="256"/>
+  <copyField source="date" dest="date_str" maxChars="256"/>
 </schema>

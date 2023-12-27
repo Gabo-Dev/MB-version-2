@@ -6,8 +6,10 @@
 package com.practica.proyecto_mb_v_2;
 
 import java.awt.HeadlessException;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -142,10 +144,12 @@ public class Menu extends javax.swing.JFrame {
                 line = sc.nextLine();
                 //  indice
                 if (line.startsWith(".I", 0)) {
-                    indexaDocumento(index, title, author, text, persons,dates,organizations);
+                    indexaDocumento(index, title, author, text, persons, dates, organizations);
                     parts = line.split(" ");
                     index = parts[1];
-                    //  System.out.println(index);
+                    persons = new ArrayList<>();
+                    dates = new ArrayList<>();
+                    organizations = new ArrayList<>();
                 }
                 if (line.startsWith(".T", 0)) {
                     title = sc.nextLine();
@@ -174,10 +178,10 @@ public class Menu extends javax.swing.JFrame {
                         while (m1.find()) {
                             persons.add(m1.group(1));
                         }
-                         while (m2.find()) {
+                        while (m2.find()) {
                             dates.add(m2.group(1));
                         }
-                          while (m3.find()) {
+                        while (m3.find()) {
                             organizations.add(m3.group(1));
                         }
                     }
@@ -196,40 +200,82 @@ public class Menu extends javax.swing.JFrame {
     private void consultaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaBtnActionPerformed
         // TODO add your handling code here:
         try {
-            Scanner sc = null;
-            String text = "", line, state = "false";
+            //String text = "", line, state = "false";
             JFileChooser fileChooser = new JFileChooser();
+            ArrayList<String> persons = new ArrayList<>(), organizations = new ArrayList<>(), dates = new ArrayList<>();
+            String EtiquetaPerson = "<Person>(.*?)<\\/Person>", EtiquetaDate = "<Date>(.*?)<\\/Date>", EtiquetaOrganization = "<Organization>(.*?)<\\/Organization>";
+            String tmp;
+
             //fileChooser.setFileFilter(new FileNameExtensionFilter("All Files", "*.*"));
             int result = fileChooser.showOpenDialog(null);
             File file = null;
             if (result == JFileChooser.APPROVE_OPTION) {
                 file = fileChooser.getSelectedFile();
             }
+            try ( BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                boolean reading = false;
+                StringBuilder text = new StringBuilder();
+                Pattern p1 = Pattern.compile(EtiquetaPerson);
+                Pattern p2 = Pattern.compile(EtiquetaDate);
+                Pattern p3 = Pattern.compile(EtiquetaOrganization);
 
-            sc = new Scanner(file);
-            while (sc.hasNextLine()) {
-                line = sc.nextLine();
-                if (line.startsWith(".I")) {
-                    state = "false";
-                    if (!text.equals("")) {
-                        searchDocuments(text);
-                        text = "";
+                while ((line = br.readLine()) != null) {
+                    if (line.startsWith(".I") || line.startsWith(".B")) {
+                        reading = false;
+                        if (!text.isEmpty()) {
+                            // Matcher
+                            Matcher m1 = p1.matcher(text);
+                            Matcher m2 = p2.matcher(text);
+                            Matcher m3 = p3.matcher(text);
+                            // extraemos contenido 
+                            while (m1.find()) {
+                                if (!persons.contains(m1.group(1))) {
+                                    tmp = m1.group(1);
+                                    tmp = tmp.replaceAll("[\\[\\](){}:]", "");
+                                    persons.add(tmp);
+                                }
+                            }
+                            while (m2.find()) {
+                                if (!dates.contains(m2.group(1))) {
+                                    tmp = m2.group(1);
+                                    tmp = tmp.replaceAll("[\\[\\](){}: ]", "");
+                                    dates.add(tmp);
+                                }
+                            }
+                            while (m3.find()) {
+                                if (organizations.contains(m3.group())) {
+                                    tmp = m3.group(1);
+                                    tmp = tmp.replaceAll("[\\[\\](){}: ]", "");
+                                    organizations.add(tmp);
+                                }
+                            }
+
+                            searchDocuments(text.toString(), persons, dates, organizations);
+                            text.setLength(0);
+                            persons = new ArrayList<>();
+                            organizations = new ArrayList<>();
+                            dates = new ArrayList<>();
+                        }
+
+                    }
+                    if (reading) {
+                        line=line.replaceAll("[\\[\\](){}:]", "");
+                        text.append(line).append(" ");
+                    }
+                    if (line.startsWith(".W")) {
+                        reading = true;
                     }
                 }
-                if ("true".equals(state)) {
-                    text = text + line + " ";
-                    text = text.replaceAll("[\\[\\](){}:]", "");
-                }
-                if (line.startsWith(".W", 0)) {
-                    state = "true";
 
-                }
+            } catch (Exception e) {
             }
+            
             JOptionPane.showMessageDialog(null, "Consulta Realizada");
             JOptionPane.showMessageDialog(null, "El programa procederá a crear el fichero trec correspondiente");
             try {
                 if (trecDoc.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "No se ha realizado ninguna consulta");
+                    JOptionPane.showMessageDialog(null, "Error: la consulta no obtuvo resultados.");
                 } else {
                     String path = "";
                     JOptionPane.showMessageDialog(null, "Indica el directorio donde se almacenarán los datos:");
@@ -249,8 +295,9 @@ public class Menu extends javax.swing.JFrame {
             } catch (HeadlessException e) {
                 System.out.println(e);
             }
-        } catch (HeadlessException | IOException | NullPointerException | SolrServerException e) {
+        } catch (HeadlessException | NullPointerException  e) {
             JOptionPane.showMessageDialog(null, "Error al realizar consulta.");
+            System.out.println(e);
         }
     }//GEN-LAST:event_consultaBtnActionPerformed
 
@@ -286,12 +333,12 @@ public class Menu extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Documents deleted");
     }
 
-    public void indexaDocumento(String index, String title, String author, String text, ArrayList<String> p,ArrayList<String> d,ArrayList<String> o) throws SolrServerException, IOException {
+    public void indexaDocumento(String index, String title, String author, String text, ArrayList<String> p, ArrayList<String> d, ArrayList<String> o) throws SolrServerException, IOException {
         HttpSolrClient solr = new HttpSolrClient.Builder("http://localhost:8983/solr/micoleccion").build();
         //  Create SolrDocument 
         SolrInputDocument dc = new SolrInputDocument();
         // filtramos
-        if (title!=null && author!=null && text!=null) {
+        if (title != null && author != null && text != null) {
             title = title.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>", "");
             author = author.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>", "");
             text = text.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>", "");
@@ -301,15 +348,15 @@ public class Menu extends javax.swing.JFrame {
         dc.addField("author", author);
         dc.addField("text", text);
         for (int i = 0; i < p.size(); i++) {
-            dc.addField("person " + (i + 1), p.get(i));
+            dc.addField("person", p.get(i));
         }
         for (int i = 0; i < d.size(); i++) {
-            dc.addField("date " + (i + 1), d.get(i));
+            dc.addField("date", d.get(i));
         }
         for (int i = 0; i < o.size(); i++) {
-            dc.addField("organization " + (i + 1), o.get(i));
+            dc.addField("organization", o.get(i));
         }
-        
+
         solr.add(dc);
         solr.commit();
 
@@ -336,24 +383,69 @@ public class Menu extends javax.swing.JFrame {
         return has;
     }
 
-    public void searchDocuments(String desc) throws SolrServerException, IOException {
-        textInfo.setText("");
+    public void searchDocuments(String desc, ArrayList<String> persons, ArrayList<String> dates, ArrayList<String> organizations) throws SolrServerException, IOException {
+        docs.clear();
+        //textInfo.setText("");
         noConsultas++;
         HttpSolrClient solr = new HttpSolrClient.Builder("http://localhost:8983/solr/micoleccion").build();
         SolrQuery query = new SolrQuery();
-        query.setQuery("*:*");
-        query.addFilterQuery("");
-        query.setFields("index", "id", "score", "title");
+        desc = desc.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>", "");
+        query.setQuery("text: " + desc);
+        query.setIncludeScore(true);
+        //query.addFilterQuery("text: " + desc);
+        if (!persons.isEmpty()) {
+            query.addFilterQuery("person:(" + String.join(" OR ", persons) + ")");
+        }
+
+        if (!dates.isEmpty()) {
+            query.addFilterQuery("date:(" + String.join(" OR ", dates) + ")");
+        }
+
+        if (!organizations.isEmpty()) {
+            query.addFilterQuery("organization:(" + String.join(" OR ", organizations) + ")");
+        }
+
+        query.set("index", "id", "author", "title", "person", "date", "organization");
         QueryResponse rsp = solr.query(query);
         docs = rsp.getResults();
         int tm = docs.size();
-        //System.out.println("Tamaño de la consulta : " + tm);
+        System.out.println("Tamaño de la consulta : " + tm);
+
         for (int i = 0; i < tm; i++) {
-            textInfo.append(docs.get(i).values().toString() + "\n");
+            if (docs.get(i).containsKey("index")) {
+                textInfo.append("Index: " + docs.get(i).getFieldValue("index").toString() + "  ");
+            }
+            if (docs.get(i).containsKey("author")) {
+                textInfo.append("Autor: " + docs.get(i).getFieldValue("author").toString() + "  ");
+            }
+            if (docs.get(i).containsKey("title")) {
+                textInfo.append("Titulo: " + docs.get(i).getFieldValue("title").toString() + "  ");
+            }
+            if (docs.get(i).containsKey("text")) {
+                textInfo.append("Texto: " + docs.get(i).getFieldValue("text").toString() + "  ");
+            }
+            if (docs.get(i).containsKey("id")) {
+                textInfo.append("Id: " + docs.get(i).getFieldValue("id").toString() + "  ");
+            }
+
+            if (docs.get(i).containsKey("person")) {
+                textInfo.append("Persona: " + docs.get(i).getFieldValue("person").toString() + "  ");
+            }
+            if (docs.get(i).containsKey("date")) {
+                textInfo.append("Fecha: " + docs.get(i).getFieldValue("date").toString() + " ");
+            }
+            if (docs.get(i).containsKey("organization")) {
+                textInfo.append("Organizacion: " + docs.get(i).getFieldValue("organization").toString() + "  ");
+            }
+
+            textInfo.append("score: " + docs.get(i).getFieldValue("score").toString() + "  ");
+
             //  Añadimos el valor de cada consulta al doc global
             docs.get(i).setField("Consulta", noConsultas);
             trecDoc.add(docs.get(i));
+            textInfo.append("\n---------------------------------------------------------------------------- \n");
         }
+        
     }
 
     private boolean createQRYTrec(String path) {
@@ -366,7 +458,7 @@ public class Menu extends javax.swing.JFrame {
             int tm = trecDoc.size();
             for (int i = 0; i < tm; i++) {
                 document = trecDoc.get(i).getFieldValue("index").toString().replaceAll("[\\[\\](){}]", "");
-                line = trecDoc.get(i).getFieldValue("Consulta") + " " + "Q0" + " " + document + " " + i + " " + trecDoc.get(i).getFieldValue("score") + " " + team + "\n";
+                line = trecDoc.get(i).getFieldValue("Consulta") + " " + "Q0" + " " + document + " " + (i+1) + " " + trecDoc.get(i).getFieldValue("score") + " " + team + "\n";
                 //  System.out.println(line);
                 w.write(line);
             }
