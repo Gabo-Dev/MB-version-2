@@ -117,11 +117,13 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             Scanner sc = null;
-            String state = "b", index = null, title = null, author = null, text = null,
+            String state = "b", index = "", title = "", text = "",
                     line, parts[];
-            ArrayList<String> persons = new ArrayList<>(), organizations = new ArrayList<>(), dates = new ArrayList<>();
+            ArrayList<String> persons = new ArrayList<>(), organizations = new ArrayList<>(),
+                    money = new ArrayList<>(), locations = new ArrayList<>(), authors = new ArrayList<>();
             // Etiquetas auxiliares para identificar el patron de cada atributo person, date y organization;
-            String EtiquetaPerson = "<Person>(.*?)<\\/Person>", EtiquetaDate = "<Date>(.*?)<\\/Date>", EtiquetaOrganization = "<Organization>(.*?)<\\/Organization>";
+            String EtiquetaPerson = "<Person>(.*?)<\\/Person>", EtiquetaOrganization = "<Organization>(.*?)<\\/Organization>",
+                    EtiquetaMoney = "<Money>(.*?)<\\/Money>", EtiquetaLocation = "<Location>(.*?)<\\/Location>";
             String url = "http://localhost:8983/solr";
             if (hasCollection(url)) {
                 int opc = JOptionPane.showConfirmDialog(null, "Solr tiene un core, deseas hacer un reset?");
@@ -140,52 +142,74 @@ public class Menu extends javax.swing.JFrame {
             sc = new Scanner(file);
             //  leemos
             while (sc.hasNextLine()) {
-                state = "p";
                 line = sc.nextLine();
                 //  indice
                 if (line.startsWith(".I", 0)) {
-                    indexaDocumento(index, title, author, text, persons, dates, organizations);
+                    if (!title.isEmpty()) {
+                        indexaDocumento(index, title, authors, text, persons, organizations, money, locations);
+                        persons.clear();
+                        organizations.clear();
+                        money.clear();
+                        locations.clear();
+                        authors.clear();
+                        title = "";
+                        text = "";
+                    }
+
                     parts = line.split(" ");
                     index = parts[1];
-                    persons = new ArrayList<>();
-                    dates = new ArrayList<>();
-                    organizations = new ArrayList<>();
                 }
                 if (line.startsWith(".T", 0)) {
                     title = sc.nextLine();
+                    //title = title.replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", "");
+
                 }
                 if (line.startsWith(".A", 0)) {
-                    author = sc.nextLine();
+                    state = "author";
+                    line = sc.nextLine();
                 }
                 if (line.startsWith(".W", 0)) {  //texto 
                     state = "READING";
+                    line = sc.nextLine();
+                }
+                if (line.startsWith(".X", 0) || line.startsWith(".B", 0)) {
+                    state = "IGNORING";
                 }
                 if ("READING".equals(state)) {  //texto del documento 
-                    text = sc.nextLine();
-
                     // Matcher
                     Pattern p1 = Pattern.compile(EtiquetaPerson);
-                    Matcher m1 = p1.matcher(text);
-                    Pattern p2 = Pattern.compile(EtiquetaDate);
-                    Matcher m2 = p2.matcher(text);
+                    Matcher m1 = p1.matcher(line);
                     Pattern p3 = Pattern.compile(EtiquetaOrganization);
-                    Matcher m3 = p3.matcher(text);
-                    if (text.startsWith(".X", 0)) {
-                        state = "IGNORING";
-                    } else {
-                        text = text + text;
-                        // extraemos contenido 
-                        while (m1.find()) {
-                            persons.add(m1.group(1));
-                        }
-                        while (m2.find()) {
-                            dates.add(m2.group(1));
-                        }
-                        while (m3.find()) {
-                            organizations.add(m3.group(1));
+                    Matcher m3 = p3.matcher(line);
+                    Pattern p4 = Pattern.compile(EtiquetaMoney);
+                    Matcher m4 = p4.matcher(line);
+                    Pattern p5 = Pattern.compile(EtiquetaLocation);
+                    Matcher m5 = p5.matcher(line);
+                    text = text + line;
+                    //text = text.replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", "");
+                    // extraemos contenido 
+                    while (m1.find()) {
+                        if (!persons.contains(m1.group(1))) {
+                            persons.add(m1.group(1).replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", ""));
                         }
                     }
 
+                    while (m3.find()) {
+                        if (!organizations.contains(m3.group(1))) {
+                            organizations.add(m3.group(1).replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", ""));
+                        }
+
+                    }
+                    while (m4.find()) {
+                        money.add(m4.group(1).replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", ""));
+                    }
+                    while (m5.find()) {
+                        locations.add(m5.group(1).replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", ""));
+                    }
+                }
+                if ("author".equals(state)) {
+                    line = line.replaceAll("<Person>|</Person>|<Organization>|</Organization>|<Money>|</Money>|<Location>|</Location>", "");
+                    authors.add(line);
                 }
             }
             JOptionPane.showMessageDialog(null, "Document Indexed");
@@ -202,8 +226,10 @@ public class Menu extends javax.swing.JFrame {
         try {
             //String text = "", line, state = "false";
             JFileChooser fileChooser = new JFileChooser();
-            ArrayList<String> persons = new ArrayList<>(), organizations = new ArrayList<>(), dates = new ArrayList<>();
-            String EtiquetaPerson = "<Person>(.*?)<\\/Person>", EtiquetaDate = "<Date>(.*?)<\\/Date>", EtiquetaOrganization = "<Organization>(.*?)<\\/Organization>";
+            ArrayList<String> persons = new ArrayList<>(), organizations = new ArrayList<>(),
+                    money = new ArrayList<>(), locations = new ArrayList<>();
+            String EtiquetaPerson = "<Person>(.*?)<\\/Person>", EtiquetaOrganization = "<Organization>(.*?)<\\/Organization>",
+                    EtiquetaMoney = "<Money>(.*?)<\\/Money>", EtiquetaLocation = "<Location>(.*?)<\\/Location>";
             String tmp;
 
             //fileChooser.setFileFilter(new FileNameExtensionFilter("All Files", "*.*"));
@@ -217,50 +243,56 @@ public class Menu extends javax.swing.JFrame {
                 boolean reading = false;
                 StringBuilder text = new StringBuilder();
                 Pattern p1 = Pattern.compile(EtiquetaPerson);
-                Pattern p2 = Pattern.compile(EtiquetaDate);
                 Pattern p3 = Pattern.compile(EtiquetaOrganization);
-
+                Pattern p4 = Pattern.compile(EtiquetaMoney);
+                Pattern p5 = Pattern.compile(EtiquetaLocation);
                 while ((line = br.readLine()) != null) {
                     if (line.startsWith(".I") || line.startsWith(".B")) {
                         reading = false;
                         if (!text.isEmpty()) {
                             // Matcher
                             Matcher m1 = p1.matcher(text);
-                            Matcher m2 = p2.matcher(text);
                             Matcher m3 = p3.matcher(text);
+                            Matcher m4 = p4.matcher(text);
+                            Matcher m5 = p5.matcher(text);
                             // extraemos contenido 
                             while (m1.find()) {
                                 if (!persons.contains(m1.group(1))) {
                                     tmp = m1.group(1);
-                                    tmp = tmp.replaceAll("[\\[\\](){}:]", "");
+                                    tmp = tmp.replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", "");
                                     persons.add(tmp);
-                                }
-                            }
-                            while (m2.find()) {
-                                if (!dates.contains(m2.group(1))) {
-                                    tmp = m2.group(1);
-                                    tmp = tmp.replaceAll("[\\[\\](){}: ]", "");
-                                    dates.add(tmp);
                                 }
                             }
                             while (m3.find()) {
                                 if (organizations.contains(m3.group())) {
                                     tmp = m3.group(1);
-                                    tmp = tmp.replaceAll("[\\[\\](){}: ]", "");
+                                    tmp = tmp.replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", "");
                                     organizations.add(tmp);
                                 }
                             }
-
-                            searchDocuments(text.toString(), persons, dates, organizations);
+                            while (m4.find()) {
+                                if (money.contains(m4.group())) {
+                                    tmp = m4.group(1);
+                                    tmp = tmp.replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", "");
+                                    money.add(tmp);
+                                }
+                            }
+                            while (m5.find()) {
+                                if (locations.contains(m5.group())) {
+                                    tmp = m5.group(1);
+                                    tmp = tmp.replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", "");
+                                    locations.add(tmp);
+                                }
+                            }
+                            searchDocuments(text.toString(), persons, organizations, money, locations);
                             text.setLength(0);
                             persons = new ArrayList<>();
                             organizations = new ArrayList<>();
-                            dates = new ArrayList<>();
                         }
 
                     }
                     if (reading) {
-                        line=line.replaceAll("[\\[\\](){}:]", "");
+                        //line = line.replaceAll("[&\"~^*?(){}[\\\\]:;/\\\\+\\-]", "");
                         text.append(line).append(" ");
                     }
                     if (line.startsWith(".W")) {
@@ -270,7 +302,7 @@ public class Menu extends javax.swing.JFrame {
 
             } catch (Exception e) {
             }
-            
+
             JOptionPane.showMessageDialog(null, "Consulta Realizada");
             JOptionPane.showMessageDialog(null, "El programa procederá a crear el fichero trec correspondiente");
             try {
@@ -295,12 +327,12 @@ public class Menu extends javax.swing.JFrame {
             } catch (HeadlessException e) {
                 System.out.println(e);
             }
-        } catch (HeadlessException | NullPointerException  e) {
+        } catch (HeadlessException | NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Error al realizar consulta.");
             System.out.println(e);
         }
-    }//GEN-LAST:event_consultaBtnActionPerformed
-
+    }
+//GEN-LAST:event_consultaBtnActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -333,30 +365,24 @@ public class Menu extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Documents deleted");
     }
 
-    public void indexaDocumento(String index, String title, String author, String text, ArrayList<String> p, ArrayList<String> d, ArrayList<String> o) throws SolrServerException, IOException {
+    public void indexaDocumento(String index, String title, ArrayList<String> authors, String text, ArrayList<String> p, ArrayList<String> o, ArrayList<String> m, ArrayList<String> l) throws SolrServerException, IOException {
+        String tmp;
         HttpSolrClient solr = new HttpSolrClient.Builder("http://localhost:8983/solr/micoleccion").build();
         //  Create SolrDocument 
         SolrInputDocument dc = new SolrInputDocument();
         // filtramos
-        if (title != null && author != null && text != null) {
-            title = title.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>", "");
-            author = author.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>", "");
-            text = text.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>", "");
+        if (title != null && text != null) {
+            title = title.replaceAll("<Person>|</Person>|<Organization>|</Organization>|<Money>|</Money>|<Location>|</Location>", "");
+            text = text.replaceAll("<Person>|</Person>|<Organization>|</Organization>|<Money>|</Money>|<Location>|</Location>", "");
         }
         dc.addField("index", index);
         dc.addField("title", title);
-        dc.addField("author", author);
         dc.addField("text", text);
-        for (int i = 0; i < p.size(); i++) {
-            dc.addField("person", p.get(i));
-        }
-        for (int i = 0; i < d.size(); i++) {
-            dc.addField("date", d.get(i));
-        }
-        for (int i = 0; i < o.size(); i++) {
-            dc.addField("organization", o.get(i));
-        }
-
+        dc.addField("author", authors.toArray(new String[0]));
+        dc.addField("person", p.toArray(new String[0]));
+        dc.addField("organization", o.toArray(new String[0]));
+        dc.addField("money", m.toArray(new String[0]));
+        dc.addField("location", l.toArray(new String[0]));
         solr.add(dc);
         solr.commit();
 
@@ -383,69 +409,57 @@ public class Menu extends javax.swing.JFrame {
         return has;
     }
 
-    public void searchDocuments(String desc, ArrayList<String> persons, ArrayList<String> dates, ArrayList<String> organizations) throws SolrServerException, IOException {
+    public void searchDocuments(String desc, ArrayList<String> persons, ArrayList<String> organizations, ArrayList<String> money, ArrayList<String> locations) throws SolrServerException, IOException {
         docs.clear();
-        //textInfo.setText("");
         noConsultas++;
         HttpSolrClient solr = new HttpSolrClient.Builder("http://localhost:8983/solr/micoleccion").build();
         SolrQuery query = new SolrQuery();
-        desc = desc.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>", "");
+        desc = desc.replaceAll("<Person>|</Person>|<Date>|</Date>|<Organization>|</Organization>|<Money>|</Money>|<Location>|</Location>", "");
         query.setQuery("text: " + desc);
         query.setIncludeScore(true);
-        //query.addFilterQuery("text: " + desc);
         if (!persons.isEmpty()) {
             query.addFilterQuery("person:(" + String.join(" OR ", persons) + ")");
         }
-
-        if (!dates.isEmpty()) {
-            query.addFilterQuery("date:(" + String.join(" OR ", dates) + ")");
-        }
-
         if (!organizations.isEmpty()) {
             query.addFilterQuery("organization:(" + String.join(" OR ", organizations) + ")");
         }
-
-        query.set("index", "id", "author", "title", "person", "date", "organization");
+        if (!money.isEmpty()) {
+            query.addFilterQuery("money:(" + String.join(" OR ", organizations) + ")");
+        }
+        if (!locations.isEmpty()) {
+            query.addFilterQuery("location:(" + String.join(" OR ", organizations) + ")");
+        }
+        query.set("index", "id", "author", "title", "person", "organization", "money", "location");
         QueryResponse rsp = solr.query(query);
         docs = rsp.getResults();
         int tm = docs.size();
-        System.out.println("Tamaño de la consulta : " + tm);
 
         for (int i = 0; i < tm; i++) {
-            if (docs.get(i).containsKey("index")) {
-                textInfo.append("Index: " + docs.get(i).getFieldValue("index").toString() + "  ");
-            }
-            if (docs.get(i).containsKey("author")) {
-                textInfo.append("Autor: " + docs.get(i).getFieldValue("author").toString() + "  ");
-            }
-            if (docs.get(i).containsKey("title")) {
-                textInfo.append("Titulo: " + docs.get(i).getFieldValue("title").toString() + "  ");
-            }
-            if (docs.get(i).containsKey("text")) {
-                textInfo.append("Texto: " + docs.get(i).getFieldValue("text").toString() + "  ");
-            }
-            if (docs.get(i).containsKey("id")) {
-                textInfo.append("Id: " + docs.get(i).getFieldValue("id").toString() + "  ");
-            }
-
+            textInfo.append("Index: " + docs.get(i).getFieldValue("index").toString() + "  ");
+            textInfo.append("Autor: " + docs.get(i).getFieldValue("author").toString() + "  ");
+            textInfo.append("Titulo: " + docs.get(i).getFieldValue("title").toString() + "  ");
+            textInfo.append("Texto: " + docs.get(i).getFieldValue("text").toString() + "  ");
+            textInfo.append("score: " + docs.get(i).getFieldValue("score").toString() + "  ");
             if (docs.get(i).containsKey("person")) {
                 textInfo.append("Persona: " + docs.get(i).getFieldValue("person").toString() + "  ");
             }
-            if (docs.get(i).containsKey("date")) {
-                textInfo.append("Fecha: " + docs.get(i).getFieldValue("date").toString() + " ");
-            }
+
             if (docs.get(i).containsKey("organization")) {
                 textInfo.append("Organizacion: " + docs.get(i).getFieldValue("organization").toString() + "  ");
             }
-
-            textInfo.append("score: " + docs.get(i).getFieldValue("score").toString() + "  ");
+            if (docs.get(i).containsKey("money")) {
+                textInfo.append("Dinero: " + docs.get(i).getFieldValue("money").toString() + "  ");
+            }
+            if (docs.get(i).containsKey("location")) {
+                textInfo.append("Lugares: " + docs.get(i).getFieldValue("location").toString() + "  ");
+            }
 
             //  Añadimos el valor de cada consulta al doc global
             docs.get(i).setField("Consulta", noConsultas);
             trecDoc.add(docs.get(i));
             textInfo.append("\n---------------------------------------------------------------------------- \n");
         }
-        
+
     }
 
     private boolean createQRYTrec(String path) {
@@ -458,7 +472,7 @@ public class Menu extends javax.swing.JFrame {
             int tm = trecDoc.size();
             for (int i = 0; i < tm; i++) {
                 document = trecDoc.get(i).getFieldValue("index").toString().replaceAll("[\\[\\](){}]", "");
-                line = trecDoc.get(i).getFieldValue("Consulta") + " " + "Q0" + " " + document + " " + (i+1) + " " + trecDoc.get(i).getFieldValue("score") + " " + team + "\n";
+                line = trecDoc.get(i).getFieldValue("Consulta") + " " + "Q0" + " " + document + " " + (i + 1) + " " + trecDoc.get(i).getFieldValue("score") + " " + team + "\n";
                 //  System.out.println(line);
                 w.write(line);
             }
